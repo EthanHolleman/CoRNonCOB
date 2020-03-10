@@ -1,2 +1,2 @@
-# PEP_SORFF
-Peptide Short Open Reading Frame Finder
+# CoRNonCOB
+Compare really non-colossal oligonucleotides in  bacteria
