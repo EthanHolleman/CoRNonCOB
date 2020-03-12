@@ -84,9 +84,12 @@
               
             
             
-              <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">CoRNonCOB</a><ul class="current">
+              <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Project Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calander.html">Project Calander</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="args.html">args module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">genome module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="io_utils.html">io_utils module</a></li>
@@ -140,7 +143,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="modules.html">CoRNonCOB</a> &raquo;</li>
+          <li><a href="modules.html">Modules</a> &raquo;</li>
         
       <li>genome module</li>
     
@@ -165,12 +168,30 @@
 <span id="genome-module"></span><h1>genome module<a class="headerlink" href="#module-genome" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="genome.Genome">
-<em class="property">class </em><code class="sig-prename descclassname">genome.</code><code class="sig-name descname">Genome</code><span class="sig-paren">(</span><em class="sig-param">genome_file</em>, <em class="sig-param">phenotype</em><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">genome.</code><code class="sig-name descname">Genome</code><span class="sig-paren">(</span><em class="sig-param">genome_file</em>, <em class="sig-param">phenotype</em>, <em class="sig-param">gene_prediction_file=None</em>, <em class="sig-param">non_coding_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Representation of an individual bacterial genome. Stores its sequence files
+and has methods for predicting coding regions and then retreiving
+non-coding regions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>genome_file</strong> – string, filepath to fasta formated file of the complete bacterial genome</p></li>
+<li><p><strong>phenotype</strong> – string, string that acts as a key for identifying the bacterial phenotype</p></li>
+<li><p><strong>gene_prediction_file</strong> – string, filepath to gff generated via prokka. Default = None</p></li>
+<li><p><strong>non_coding_file</strong> – string, filepath to fasta of non-coding regions. Default = None</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="method">
 <dt id="genome.Genome.get_non_coding_regions">
 <code class="sig-name descname">get_non_coding_regions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome.get_non_coding_regions" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Using the genome file associated with an instance of a specific genome
+object and the gene prediction gff file to extract the non-coding
+regions in the genome. Will write the non-coding strings as a fasta
+file and store the path to that file in the non_coding_file
+attribute.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="genome.Genome.make_gene_predictions">

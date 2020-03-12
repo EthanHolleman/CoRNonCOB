@@ -1,4 +1,4 @@
-CoRNonCOB
+Modules
 =========
 
 .. toctree::

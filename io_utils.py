@@ -1,14 +1,13 @@
-'''
-Put helper functions for reading and parsing files in this file.
-'''
 import csv
+from Bio import SeqIO
+
 
 def parse_gff(gff_path, *args):
     '''
     Given a path to a gff file returns as a list of lists the information
     contained in the field indicies given via *args. All args should be
     integers.
-    
+
     1 	sequence  # subtract 1 from these!!!!!
     2 	source
     3 	feature
@@ -18,7 +17,7 @@ def parse_gff(gff_path, *args):
     7 	strand
     8 	phase
     9 	attributes   
-    '''   
+    '''
     gff_data = []
     if args:
         with open(gff_path) as gff:
@@ -28,9 +27,16 @@ def parse_gff(gff_path, *args):
     return gff_data
 
 
-def genome_parser(genome_path):
+def convert_genome_to_list(genome_path, format='fasta'):
     '''
-    Reads a genome file and returns the genome as a list where each index
-    is one nucleotide. list[0] = first nucleotide
+    Takes in the path to a genome in the format specified by the format
+    variable. Genome file is read using SeqIO from Biopython and if the file
+    contains multible records the nucleotide sequences are appended to one
+    string. String is then returned as a list with each index containing one
+    nucleotide.
     '''
-    pass
+    genome_string = ''
+    genome_file = SeqIO.parse(genome_path, format)
+    for record in genome_file:
+        genome_string += record.seq
+    return [nuc for nuc in genome_string]

@@ -8,15 +8,19 @@ Welcome to CoRNonCOB's documentation!
 
 .. toctree::
    :maxdepth: 1
+   :caption: Table of Contents
 
-   support
+   quickstart
+   overview
+   calander
    modules
 
 
 
-Indices and tables
-==================
+   
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+
+
+
+   
+
