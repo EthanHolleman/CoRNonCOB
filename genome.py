@@ -1,5 +1,6 @@
 from io_utils import parse_gff
 from io_utils import convert_genome_to_list
+from sequence import Sequence
 
 
 class Genome():
@@ -19,6 +20,9 @@ class Genome():
         self.phenotype = phenotype
         self.gene_prediction_file = gene_prediction_file
         self.non_coding_file = non_coding_file
+        self.non_coding_seqs = []
+        # potentially change to dictionary to allow non coding seq
+        # look up by start location if that is needed later
 
     def make_gene_predictions(self):
         pass
@@ -34,7 +38,6 @@ class Genome():
         '''
         start_stop_list = parse_gff(self.gene_prediction_file, 3, 4)
         genome = convert_genome_to_list(self.genome_file)
-        non_coding_strings = []
         cur_non_coding_string = ''
         i, j = 0, 0
         start, stop = start_stop_list[j]
@@ -44,26 +47,19 @@ class Genome():
                 cur_non_coding_string += genome[i]
                 i += 1
             else:
-                non_coding_strings.append(cur_non_coding_string)
+                self.non_coding_seqs.append(Sequence(cur_non_coding_string, i)
                 cur_non_coding_string = ''
-                i = stop + 1
+                i = stop
+                # need to look into this more because the positions get from
+                # the actaul gff file will be base one while i is refering
+                # to positions in the genome in base 0
                 j += 1
                 if j < len(start_stop_list):
                     start, stop = start_stop_list[j]
                 else:
-                    non_coding_strings.append(''.join(genome[i:]))
+                    self.non_coding_seqs.append(''.join(Sequence(genome[i:], i))
                     break
-
-        return non_coding_strings
 
     # read in the genome file
     # get positions of coding regions
     # extract the non-coding regions and write to a file
-
-    def translate_non_coding(self):  # oxymoron?
-        pass
-        # convert non_coding sequnces into all 6 reading frames
-        # not sure if we want to keep track of this if we do becuase stuff
-        # like the position would be important then should make a seperate
-        # object for sequence or non coding or something like that that
-        # can then be translated
