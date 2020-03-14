@@ -41,7 +41,12 @@ However, becuase I am no expect there are still some jank elements to actually
 getting the html to render on the website. You will need to copy all the html
 files so they are in the docs dir not docs/html (GitHub likes it better this
 way I guess). Then delete the html directory and push your changes to the
-repo. They should show up shortly.
+repo. To do this run these commands from the CoRNonCOB directory.
+.. code-block:: bash
+
+   cp -r ./docs/html/ ./docs/.
+   rm -r ./docs/html
+
 
 Testing
 -------
