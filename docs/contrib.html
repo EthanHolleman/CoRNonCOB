@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to CoRNonCOB’s documentation! &mdash; CoRNonCOB 0.1 documentation</title>
+  <title>Adding to this Site &mdash; CoRNonCOB 0.1 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Quickstart Guide" href="quickstart.html" /> 
+    <link rel="prev" title="sequence module" href="sequence.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -49,7 +49,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> CoRNonCOB
+            <a href="index.html" class="icon icon-home"> CoRNonCOB
           
 
           
@@ -84,12 +84,17 @@
             
             
               <p class="caption"><span class="caption-text">Table of Contents</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Project Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calander.html">Project Calander</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contrib.html">Adding to this Site</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Adding to this Site</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basics">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rendering-rst">Rendering rst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -104,7 +109,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">CoRNonCOB</a>
+          <a href="index.html">CoRNonCOB</a>
         
       </nav>
 
@@ -133,15 +138,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Welcome to CoRNonCOB’s documentation!</li>
+      <li>Adding to this Site</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/contrib.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -154,17 +159,49 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-cornoncob-s-documentation">
-<h1>Welcome to CoRNonCOB’s documentation!<a class="headerlink" href="#welcome-to-cornoncob-s-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Table of Contents</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Project Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="calander.html">Project Calander</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contrib.html">Adding to this Site</a></li>
-</ul>
+  <div class="section" id="adding-to-this-site">
+<h1>Adding to this Site<a class="headerlink" href="#adding-to-this-site" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
+<p>Everything here is generated using Sphinx, which is an auto-documentation
+program orginally devloped for the Python docs. To build updated versions of
+these documentation you will need to install it.</p>
+<p><a class="reference external" href="https://www.sphinx-doc.org/en/1.6/install.html">Install Sphinx</a></p>
+<p>However you don’t have to, to start editing. To jump in just navigate to the
+sphinx directory in the repo and open up one of the .rst files. .rst files are
+what sphinx builds html from which are ultimately rendered to make the website
+good pretty.</p>
+<p>However you don’t have to, to start editing. To jump in just navigate to the
+sphinx directory in the repo and open up one of the .rst files. .rst files are
+what sphinx builds html from which are ultimately rendered to make the website
+good pretty.</p>
+<p>Rst has some special conventions for doing fancy things like adding links or codeblocks.
+You can use <a class="reference external" href="https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html">this cheatsheet link</a>
+for that kind of stuff. (I have basically just been copy and pasting from here)</p>
+<p>Then once you have made some edits, commit them to the repo; very cool!</p>
+</div>
+<div class="section" id="rendering-rst">
+<h2>Rendering rst<a class="headerlink" href="#rendering-rst" title="Permalink to this headline">¶</a></h2>
+<p>If you want to render the rst to html you will also need to install the Read
+the Docs theme. You can do so with the code below.
+.. code-block:: bash</p>
+<blockquote>
+<div><p>pip install sphinx_rtd_theme</p>
+</div></blockquote>
+<p>After you have made some changes to rst files navigate to the sphinx directory
+in the repo and run <code class="code docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code>. This will make html files in the
+docs/html directory of the repo.</p>
+<p>However, becuase I am no expect there are still some jank elements to actually
+getting the html to render on the website. You will need to copy all the html
+files so they are in the docs dir not docs/html (GitHub likes it better this
+way I guess). Then delete the html directory and push your changes to the
+repo. They should show up shortly.</p>
+</div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>If you want to test your changes before pushing, just do the same make process
+and is described above and click on the html file. It should open up in your
+browser.</p>
 </div>
 </div>
 
@@ -176,8 +213,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="quickstart.html" class="btn btn-neutral float-right" title="Quickstart Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+        <a href="sequence.html" class="btn btn-neutral float-left" title="sequence module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

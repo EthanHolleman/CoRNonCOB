@@ -14,6 +14,7 @@ Welcome to CoRNonCOB's documentation!
    overview
    calander
    modules
+   contrib
 
 
 
