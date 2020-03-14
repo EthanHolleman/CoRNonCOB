@@ -1,8 +1,75 @@
 Quickstart Guide
 ================
 
-Install Dependencies
+
+Install ncbi-blast+
+---------------------
+**Do this before running Prokka**
+
+Prokka requires makeblastdb version >= 2.8. Unfortunately if you are on Ubuntu
+you can only install version 2.6 using :code:`sudo apt-get install ncbi-blast+`
+so regardless of your operating system you will want to head to 
+`NCBI FTP server <ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/>`_
+to download the latest version and place it somewhere so it is executable. If
+you are having problems doing this, here is a `good link to check out <https://unix.stackexchange.com/questions/3809/how-can-i-make-a-program-executable-from-everywhere>`_
+(Sorry windows people). Test by typing :code:`makeblastdb --help` in your terminal.
+You should get the help menu.
+
+
+
+Install Prokka with Sudo Privlages
 --------------------
+Note: I installed Prokka for Ubuntu but it looks like the steps for Mac are
+prety similar. Hopefully this is helpful.
+
+1. `Visit the GitHub and follow their install directions <https://github.com/tseemann/prokka>`_
+
+.. note::  I ran the last command from my home directory. I am pretty sure Prokka sets itself up where you run that last command.
+
+2. Test to make sure Prokka is responsive. My commands to do so look like below.
+
+.. note::  Your file paths may look different than mine.
+
+.. code-block:: bash
+   :linenos:
+
+   cd
+   cd prokka/bin
+   ./prokka --help
+
+This should print the help menu if everything is working. 
+
+Calling tree from the prokka folder in my home directory this is the directory
+structure I got. 
+
+.. code-block:: text
+
+    .
+    ├── bin
+    ├── binaries
+    │   ├── common
+    │   ├── darwin
+    │   └── linux
+    ├── db
+    │   ├── cm
+    │   │   └── __build
+    │   ├── genus
+    │   ├── hmm
+    │   └── kingdom
+    │       ├── Archaea
+    │       ├── Bacteria
+    │       ├── Mitochondria
+    │       └── Viruses
+    ├── doc
+    └── test
+
+Install Prokka without Sudo Privlages
+--------------------------------------
+Still working on that one. I tried cloning it onto the comp bio server
+and running but got some errors about compilation.
+
+
+
 
 
 

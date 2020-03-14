@@ -87,7 +87,9 @@
               <p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-ncbi-blast">Install ncbi-blast+</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-prokka-with-sudo-privlages">Install Prokka with Sudo Privlages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-prokka-without-sudo-privlages">Install Prokka without Sudo Privlages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#get-data">Get Data</a></li>
 </ul>
 </li>
@@ -160,8 +162,71 @@
             
   <div class="section" id="quickstart-guide">
 <h1>Quickstart Guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="install-dependencies">
-<h2>Install Dependencies<a class="headerlink" href="#install-dependencies" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install-ncbi-blast">
+<h2>Install ncbi-blast+<a class="headerlink" href="#install-ncbi-blast" title="Permalink to this headline">¶</a></h2>
+<p><strong>Do this before running Prokka</strong></p>
+<p>Prokka requires makeblastdb version &gt;= 2.8. Unfortunately if you are on Ubuntu
+you can only install version 2.6 using <code class="code docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">ncbi-blast+</span></code>
+so regardless of your operating system you will want to head to
+<a class="reference external" href="ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/">NCBI FTP server</a>
+to download the latest version and place it somewhere so it is executable. If
+you are having problems doing this, here is a <a class="reference external" href="https://unix.stackexchange.com/questions/3809/how-can-i-make-a-program-executable-from-everywhere">good link to check out</a>
+(Sorry windows people). Test by typing <code class="code docutils literal notranslate"><span class="pre">makeblastdb</span> <span class="pre">--help</span></code> in your terminal.
+You should get the help menu.</p>
+</div>
+<div class="section" id="install-prokka-with-sudo-privlages">
+<h2>Install Prokka with Sudo Privlages<a class="headerlink" href="#install-prokka-with-sudo-privlages" title="Permalink to this headline">¶</a></h2>
+<p>Note: I installed Prokka for Ubuntu but it looks like the steps for Mac are
+prety similar. Hopefully this is helpful.</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://github.com/tseemann/prokka">Visit the GitHub and follow their install directions</a></p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I ran the last command from my home directory. I am pretty sure Prokka sets itself up where you run that last command.</p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Test to make sure Prokka is responsive. My commands to do so look like below.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Your file paths may look different than mine.</p>
+</div>
+<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">cd</span>
+<span class="nb">cd</span> prokka/bin
+./prokka --help
+</pre></div>
+</td></tr></table></div>
+<p>This should print the help menu if everything is working.</p>
+<p>Calling tree from the prokka folder in my home directory this is the directory
+structure I got.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.
+├── bin
+├── binaries
+│   ├── common
+│   ├── darwin
+│   └── linux
+├── db
+│   ├── cm
+│   │   └── __build
+│   ├── genus
+│   ├── hmm
+│   └── kingdom
+│       ├── Archaea
+│       ├── Bacteria
+│       ├── Mitochondria
+│       └── Viruses
+├── doc
+└── test
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-prokka-without-sudo-privlages">
+<h2>Install Prokka without Sudo Privlages<a class="headerlink" href="#install-prokka-without-sudo-privlages" title="Permalink to this headline">¶</a></h2>
+<p>Still working on that one. I tried cloning it onto the comp bio server
+and running but got some errors about compilation.</p>
 </div>
 <div class="section" id="get-data">
 <h2>Get Data<a class="headerlink" href="#get-data" title="Permalink to this headline">¶</a></h2>

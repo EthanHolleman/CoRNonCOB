@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sequence module &mdash; CoRNonCOB 0.1 documentation</title>
+  <title>genome module &mdash; CoRNonCOB 0.1 documentation</title>
   
 
   
@@ -35,7 +35,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="phenotype module" href="phenotype.html" /> 
+    <link rel="next" title="io_utils module" href="io_utils.html" />
+    <link rel="prev" title="args module" href="args.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -90,11 +91,11 @@
 <li class="toctree-l1"><a class="reference internal" href="calander.html">Project Calander</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="args.html">args module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="genome.html">genome module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">genome module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="io_utils.html">io_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="phenotype.html">phenotype module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">sequence module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequence.html">sequence module</a></li>
 </ul>
 </li>
 </ul>
@@ -144,13 +145,13 @@
         
           <li><a href="modules.html">Modules</a> &raquo;</li>
         
-      <li>sequence module</li>
+      <li>genome module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/sequence.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/genome.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -163,41 +164,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-sequence">
-<span id="sequence-module"></span><h1>sequence module<a class="headerlink" href="#module-sequence" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="sequence.Sequence">
-<em class="property">class </em><code class="sig-prename descclassname">sequence.</code><code class="sig-name descname">Sequence</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">seq_type</em><span class="sig-paren">)</span><a class="headerlink" href="#sequence.Sequence" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Represents individual nucleotide sequences</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>seq</strong> – String, the actual nucleotide sequence. Converted to Biopython Seq object when passed in</p></li>
-<li><p><strong>start</strong> – int, start position of the sequence in its genome</p></li>
-<li><p><strong>end</strong> – int, end position of the sequence in its genome</p></li>
-<li><p><strong>seq_type</strong> – string, some identifier for the sequence type i.e ‘noncoding’</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="method">
-<dt id="sequence.Sequence.translation_six_shooter">
-<code class="sig-name descname">translation_six_shooter</code><span class="sig-paren">(</span><em class="sig-param">to_stop=False</em>, <em class="sig-param">stop_codon_symbol='*'</em><span class="sig-paren">)</span><a class="headerlink" href="#sequence.Sequence.translation_six_shooter" title="Permalink to this definition">¶</a></dt>
-<dd><p>For an instance of a Sequence object translates the sequence stored in
-self.seq into six reading frames. Those sequences are stored in
-self.frames list as Biopython seq objects.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>to_stop</strong> – Boolean, whether or not to stop translation at first stop codon</p></li>
-<li><p><strong>stop_codon_symbol</strong> – String to insert at a stop codon</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="genome-module">
+<h1>genome module<a class="headerlink" href="#genome-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -208,8 +176,10 @@ self.frames list as Biopython seq objects.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="io_utils.html" class="btn btn-neutral float-right" title="io_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="phenotype.html" class="btn btn-neutral float-left" title="phenotype module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="args.html" class="btn btn-neutral float-left" title="args module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
