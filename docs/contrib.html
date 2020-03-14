@@ -183,11 +183,10 @@ for that kind of stuff. (I have basically just been copy and pasting from here)<
 <div class="section" id="rendering-rst">
 <h2>Rendering rst<a class="headerlink" href="#rendering-rst" title="Permalink to this headline">¶</a></h2>
 <p>If you want to render the rst to html you will also need to install the Read
-the Docs theme. You can do so with the code below.
-.. code-block:: bash</p>
-<blockquote>
-<div><p>pip install sphinx_rtd_theme</p>
-</div></blockquote>
+the Docs theme. You can do so with the code below.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install sphinx_rtd_theme
+</pre></div>
+</div>
 <p>After you have made some changes to rst files navigate to the sphinx directory
 in the repo and run <code class="code docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code>. This will make html files in the
 docs/html directory of the repo.</p>
@@ -195,7 +194,11 @@ docs/html directory of the repo.</p>
 getting the html to render on the website. You will need to copy all the html
 files so they are in the docs dir not docs/html (GitHub likes it better this
 way I guess). Then delete the html directory and push your changes to the
-repo. They should show up shortly.</p>
+repo. To do this run these commands from the CoRNonCOB directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp -r ./docs/html/. ./docs/.
+rm -r ./docs/html
+</pre></div>
+</div>
 </div>
 <div class="section" id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>

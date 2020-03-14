@@ -29,6 +29,7 @@ Rendering rst
 -------------
 If you want to render the rst to html you will also need to install the Read
 the Docs theme. You can do so with the code below.
+
 .. code-block:: bash
 
    pip install sphinx_rtd_theme
@@ -42,9 +43,10 @@ getting the html to render on the website. You will need to copy all the html
 files so they are in the docs dir not docs/html (GitHub likes it better this
 way I guess). Then delete the html directory and push your changes to the
 repo. To do this run these commands from the CoRNonCOB directory.
+
 .. code-block:: bash
 
-   cp -r ./docs/html/ ./docs/.
+   cp -r ./docs/html/. ./docs/.
    rm -r ./docs/html
 
 
