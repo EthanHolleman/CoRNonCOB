@@ -167,15 +167,14 @@
 <span id="sequence-module"></span><h1>sequence module<a class="headerlink" href="#module-sequence" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="sequence.Sequence">
-<em class="property">class </em><code class="sig-prename descclassname">sequence.</code><code class="sig-name descname">Sequence</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">seq_type</em><span class="sig-paren">)</span><a class="headerlink" href="#sequence.Sequence" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">sequence.</code><code class="sig-name descname">Sequence</code><span class="sig-paren">(</span><em class="sig-param">seq</em>, <em class="sig-param">start</em>, <em class="sig-param">seq_type='noncoding'</em><span class="sig-paren">)</span><a class="headerlink" href="#sequence.Sequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Represents individual nucleotide sequences</p>
+<p>Represents individual nucleotide sequences within a larger genome</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>seq</strong> – String, the actual nucleotide sequence. Converted to Biopython Seq object when passed in</p></li>
 <li><p><strong>start</strong> – int, start position of the sequence in its genome</p></li>
-<li><p><strong>end</strong> – int, end position of the sequence in its genome</p></li>
 <li><p><strong>seq_type</strong> – string, some identifier for the sequence type i.e ‘noncoding’</p></li>
 </ul>
 </dd>
@@ -185,7 +184,11 @@
 <code class="sig-name descname">translation_six_shooter</code><span class="sig-paren">(</span><em class="sig-param">to_stop=False</em>, <em class="sig-param">stop_codon_symbol='*'</em><span class="sig-paren">)</span><a class="headerlink" href="#sequence.Sequence.translation_six_shooter" title="Permalink to this definition">¶</a></dt>
 <dd><p>For an instance of a Sequence object translates the sequence stored in
 self.seq into six reading frames. Those sequences are stored in
-self.frames list as Biopython seq objects.</p>
+self.frames list as Biopython seq objects. Within self.frames the order
+of the reading frames will always be</p>
+<p>forward(0, 1, 2) reverse complement(0, 1, 2)</p>
+<p>So accessing an instance of seq at [2] would return the forward reading
+frame offset by 1 nucleotide.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
