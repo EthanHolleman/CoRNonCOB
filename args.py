@@ -13,6 +13,7 @@ def get_args():
     parser.add_arguement('-o', default='.', help='Path to output directory')
     parser.add_arguement('-n', default='corncob', help='Run name')
     parser.add_arguement('-k', default='prakka', help='Path to prakka executable if not in PATH variable')
+    # potentially remove
     
     
     # add args 

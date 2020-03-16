@@ -25,10 +25,15 @@ class Genome():
         # look up by start location if that is needed later
 
     def make_gene_predictions(self):
+        '''
+        This function will run prokka to find predicted gene locations for
+        the instance of Genome it is called on.
+        '''
         pass
     # run gene prediction methods here
 
     def get_non_coding_regions(self):
+        # may have to modify if genomes are not all on one chromosome
         '''
         Using the genome file associated with an instance of a specific genome
         object and the gene prediction gff file to extract the non-coding
@@ -47,7 +52,7 @@ class Genome():
                 cur_non_coding_string += genome[i]
                 i += 1
             else:
-                self.non_coding_seqs.append(Sequence(cur_non_coding_string, i)
+                self.non_coding_seqs.append(Sequence(cur_non_coding_string, i))
                 cur_non_coding_string = ''
                 i = stop
                 # need to look into this more because the positions get from
@@ -57,7 +62,7 @@ class Genome():
                 if j < len(start_stop_list):
                     start, stop = start_stop_list[j]
                 else:
-                    self.non_coding_seqs.append(''.join(Sequence(genome[i:], i))
+                    self.non_coding_seqs.append(''.join(Sequence(genome[i:], i)))
                     break
 
     # read in the genome file

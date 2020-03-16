@@ -2,6 +2,23 @@ import csv
 from Bio import SeqIO
 
 
+
+def read_phenotype_map(map_path):
+    '''
+    If the user has genomes all over the place and does not
+    want to aggregate them they can provide a csv file with the
+    headers below to create Phenotype objects in the main
+    function.
+
+    PHENOTYPE, FILEPATH
+    '''
+    pass
+    # TODO: Write this function and add method in phenotype or main
+    # to make phenotype object from this kind of input
+
+    # Should return a dictionary key = filepath, value = phenotype
+
+
 def parse_gff(gff_path, *args):
     '''
     Given a path to a gff file returns as a list of lists the information
