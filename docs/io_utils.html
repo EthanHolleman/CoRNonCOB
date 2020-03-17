@@ -96,6 +96,7 @@
 <li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="phenotype.html">phenotype module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sequence.html">sequence module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#object-structure">Object Structure</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contrib.html">Adding to this Site</a></li>
@@ -178,10 +179,43 @@ nucleotide.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="io_utils.filter_prakka_files">
+<code class="sig-prename descclassname">io_utils.</code><code class="sig-name descname">filter_prakka_files</code><span class="sig-paren">(</span><em class="sig-param">prokka_results_path</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#io_utils.filter_prakka_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for returning specific types of files from a directory where
+prokka results have been written. Select the filetypes that should be
+returned by including the file extensions without the . as arguements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Params</dt>
+<dd class="field-odd"><p>prokka_results_path: String; Path to directory containing prokka results</p>
+</dd>
+<dt class="field-even">Params</dt>
+<dd class="field-even"><p><a href="#id1"><span class="problematic" id="id2">*</span></a>args: Strings; File extensions for the types of files to be returned</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="io_utils.if_not_exists_make">
+<code class="sig-prename descclassname">io_utils.</code><code class="sig-name descname">if_not_exists_make</code><span class="sig-paren">(</span><em class="sig-param">parent_dir_path</em>, <em class="sig-param">child_dir_name</em><span class="sig-paren">)</span><a class="headerlink" href="#io_utils.if_not_exists_make" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a child directory exists within a parent directory. If the child
+directory does not exist makes it. Returns the path to the child directory
+whether it was made or not. Does not search the parent directory
+recursively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>parent_dir_path: String; Path to the parent directory</p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>child_dir_name: String; Basename of directory to check if exists</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="io_utils.parse_gff">
-<code class="sig-prename descclassname">io_utils.</code><code class="sig-name descname">parse_gff</code><span class="sig-paren">(</span><em class="sig-param">gff_path</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#io_utils.parse_gff" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">io_utils.</code><code class="sig-name descname">parse_gff</code><span class="sig-paren">(</span><em class="sig-param">gff_path</em>, <em class="sig-param">*args</em>, <em class="sig-param">header=False</em><span class="sig-paren">)</span><a class="headerlink" href="#io_utils.parse_gff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a path to a gff file returns as a list of lists the information
-contained in the field indicies given via <a href="#id1"><span class="problematic" id="id2">*</span></a>args. All args should be
+contained in the field indicies given via <a href="#id3"><span class="problematic" id="id4">*</span></a>args. All args should be
 integers.</p>
 <p>1   sequence  # subtract 1 from these!!!!!
 2   source
@@ -192,6 +226,16 @@ integers.</p>
 7   strand
 8   phase
 9   attributes</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="io_utils.read_phenotype_map">
+<code class="sig-prename descclassname">io_utils.</code><code class="sig-name descname">read_phenotype_map</code><span class="sig-paren">(</span><em class="sig-param">map_path</em><span class="sig-paren">)</span><a class="headerlink" href="#io_utils.read_phenotype_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the user has genomes all over the place and does not
+want to aggregate them they can provide a csv file with the
+headers below to create Phenotype objects in the main
+function.</p>
+<p>PHENOTYPE, FILEPATH</p>
 </dd></dl>
 
 </div>
