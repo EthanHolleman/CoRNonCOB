@@ -88,6 +88,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Project Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="files.html">Output File Structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calander.html">Project Calander</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Modules</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="args.html">args module</a></li>
@@ -96,6 +97,7 @@
 <li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="phenotype.html">phenotype module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sequence.html">sequence module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#object-structure">Object Structure</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contrib.html">Adding to this Site</a></li>
@@ -173,6 +175,47 @@
 <li class="toctree-l1"><a class="reference internal" href="main.html">main module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phenotype.html">phenotype module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sequence.html">sequence module</a></li>
+</ul>
+</div>
+<div class="section" id="object-structure">
+<h2>Object Structure<a class="headerlink" href="#object-structure" title="Permalink to this headline">¶</a></h2>
+<img alt="Object structure model" src="_images/OOP.png" />
+<ul>
+<li><dl>
+<dt><strong>Phenotype Objects</strong></dt><dd><p>The outermost layer of representation. Instances of Phenotypes have a key which represents their biological phenotype and hold a list of <strong>Genome</strong>
+objects that are classified has having the phenotype of the <strong>Phenotype</strong>
+instance they exist within. Phenotype objects are where phenotype to
+phenotype comparisons take place. Cross <strong>Phenotype</strong> comparison methods
+will take in a one phenotpye instance as an arguement and compare it to the
+phenotype instance the function was called on.</p>
+<p>For example if <strong>Phenotype</strong> class had a method called find_conserved_seqs
+then using the object structure image above it could be used like</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">find_conserved_seqs</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And in theory this would return the same result as</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">B</span><span class="o">.</span><span class="n">find_conserved_seqs</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Genome Objects</strong></dt><dd><p><strong>Genome</strong> objects represent an individual bacterial genome sequence. The
+actual sequences are supplied in fasta formated file. Instances have
+functions that do things relating to an individual genome, such as predict
+coding regions and extract non-coding regions.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Sequence Objects</strong></dt><dd><p>Currently the innermost form of representation. Sequence objects represent
+a specific nucleotide sequence of interest within a <strong>Genome</strong>. They contain
+methods that would be applied on a specific sequence of a specific genome.
+This includes things like translating to all six reading frames.</p>
+</dd>
+</dl>
+</li>
 </ul>
 </div>
 </div>

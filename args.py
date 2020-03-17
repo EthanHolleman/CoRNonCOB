@@ -11,6 +11,7 @@ def get_args():
     parser.add_arguement('p1', help='Path to directory containing all genomes of phenotype 1')
     parser.add_arguement('p2', help='Path to directory containing all genome of phenotype 2')
     parser.add_arguement('-o', default='.', help='Path to output directory')
+    parser.add_arguement('-t', default=2, help='Number of threads')
     parser.add_arguement('-n', default='corncob', help='Run name')
     parser.add_arguement('-k', default='prakka', help='Path to prakka executable if not in PATH variable')
     # potentially remove

@@ -88,6 +88,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Project Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="files.html">Output File Structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calander.html">Project Calander</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="args.html">args module</a></li>
@@ -96,6 +97,7 @@
 <li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">phenotype module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sequence.html">sequence module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#object-structure">Object Structure</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contrib.html">Adding to this Site</a></li>
@@ -169,19 +171,23 @@
 <span id="phenotype-module"></span><h1>phenotype module<a class="headerlink" href="#module-phenotype" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="phenotype.Phenotype">
-<em class="property">class </em><code class="sig-prename descclassname">phenotype.</code><code class="sig-name descname">Phenotype</code><span class="sig-paren">(</span><em class="sig-param">phenotype</em><span class="sig-paren">)</span><a class="headerlink" href="#phenotype.Phenotype" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">phenotype.</code><code class="sig-name descname">Phenotype</code><span class="sig-paren">(</span><em class="sig-param">genome_dir</em>, <em class="sig-param">phenotype=None</em><span class="sig-paren">)</span><a class="headerlink" href="#phenotype.Phenotype" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="phenotype.Phenotype.add_genome">
-<code class="sig-name descname">add_genome</code><span class="sig-paren">(</span><em class="sig-param">genome</em><span class="sig-paren">)</span><a class="headerlink" href="#phenotype.Phenotype.add_genome" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes in a genome object and if it has the same phenotype as
-the phenotype instance allows that genotype to be added to the
-phenotypes list of genomes (self.genomes)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>genome</strong> – Genome object</p>
-</dd>
-</dl>
+<code class="sig-name descname">add_genome</code><span class="sig-paren">(</span><em class="sig-param">genome_path</em>, <em class="sig-param">phenotype</em><span class="sig-paren">)</span><a class="headerlink" href="#phenotype.Phenotype.add_genome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a path to a genome file (fasta file) and a phenotype
+adds an instance of a genome object to the phenotype’s
+genomes list attribute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="phenotype.Phenotype.add_genomes_from_dir">
+<code class="sig-name descname">add_genomes_from_dir</code><span class="sig-paren">(</span><em class="sig-param">genome_dir</em>, <em class="sig-param">pheno=None</em><span class="sig-paren">)</span><a class="headerlink" href="#phenotype.Phenotype.add_genomes_from_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a directory containing genome files of one phenotype and adds those
+files as genome objects to this phenotype instance’s genomes list.</p>
+<p>param: genome_dir: String; path to the genome directory
+param: pheno: String; If not None, use this string as the phenotype</p>
 </dd></dl>
 
 <dl class="method">

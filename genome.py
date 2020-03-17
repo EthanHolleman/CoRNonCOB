@@ -1,5 +1,6 @@
-from io_utils import parse_gff
-from io_utils import convert_genome_to_list
+import subprocess
+
+from io_utils import convert_genome_to_list, if_not_exists_make, parse_gff
 from sequence import Sequence
 
 
@@ -24,12 +25,36 @@ class Genome():
         # potentially change to dictionary to allow non coding seq
         # look up by start location if that is needed later
 
+    def __repr__(self):
+        '''
+        Determines what is returned when a genome object is printed.
+        '''
+        s = ['Phenotype:', str(self.phenotype), 'Genome File:', str(self.genome_file),
+             'Gene Prediction File:', str(self.gene_prediction_file),
+             'Non-coding File:', str(self.non_coding_file),
+             'Num non-coding seqs:', str(len(self.non_coding_seqs))]
+        return ' '.join(s)
+
+    def __len__(self):
+        return len(self.non_coding_seqs)
+
     def make_gene_predictions(self):
         '''
         This function will run prokka to find predicted gene locations for
         the instance of Genome it is called on.
         '''
+        # TODO: Get this function woring with correct variable names
+        # and output paths organized
+        # will need to make new folder for prokka results for each genome
+        # that runs gene prediction
         pass
+        prokka_dir = if_not_exists_make(output_dir, results_dir_name)
+
+        cmd = [path_to_exec, '--outdir', prokka_dir,
+                '--cpus', str(threads), '--force', input_file]
+        subprocess.call(cmd)
+
+        return prokka_dir
     # run gene prediction methods here
 
     def get_non_coding_regions(self):
@@ -62,7 +87,8 @@ class Genome():
                 if j < len(start_stop_list):
                     start, stop = start_stop_list[j]
                 else:
-                    self.non_coding_seqs.append(''.join(Sequence(genome[i:], i)))
+                    self.non_coding_seqs.append(
+                        ''.join(Sequence(genome[i:], i)))
                     break
 
     # read in the genome file

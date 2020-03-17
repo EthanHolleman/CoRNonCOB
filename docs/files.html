@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>main module &mdash; CoRNonCOB 0.1 documentation</title>
+  <title>Output File Structure &mdash; CoRNonCOB 0.1 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="phenotype module" href="phenotype.html" />
-    <link rel="prev" title="io_utils module" href="io_utils.html" /> 
+    <link rel="next" title="Project Calander" href="calander.html" />
+    <link rel="prev" title="Project Overview" href="overview.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,18 +88,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Project Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="files.html">Output File Structure</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Output File Structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calander.html">Project Calander</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="args.html">args module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="genome.html">genome module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="io_utils.html">io_utils module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">main module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="phenotype.html">phenotype module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sequence.html">sequence module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules.html#object-structure">Object Structure</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contrib.html">Adding to this Site</a></li>
 </ul>
 
@@ -146,15 +137,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="modules.html">Modules</a> &raquo;</li>
-        
-      <li>main module</li>
+      <li>Output File Structure</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/main.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/files.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -167,13 +156,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-main">
-<span id="main-module"></span><h1>main module<a class="headerlink" href="#module-main" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="main.main">
-<code class="sig-prename descclassname">main.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.main" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+  <div class="section" id="output-file-structure">
+<h1>Output File Structure<a class="headerlink" href="#output-file-structure" title="Permalink to this headline">¶</a></h1>
+<p>This is what I am thinking the output file structure should look like ish</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.
+└── run_name
+    ├── conserved_motifs.fasta
+    ├── phenotype_a
+    │   ├── genome_a
+    │   │   ├── non_coding_seqs.fasta
+    │   │   └── prokka_results
+    │   ├── genome_b
+    │   └── genome_c
+    ├── phenotype_b
+    │   ├── genome_d
+    │   ├── genome_e
+    │   └── genome_f
+    └── unique_motifs.fasta
+</pre></div>
+</div>
+<p>User supplies the parent directory and the run name and the program creates
+the rest of the directory structure which will approximately reflect the way
+objects are set up in the pipeline.</p>
+<p>conserved_motifs.fasta and unique_motifs.fasta just represent the final
+output that the user would be interested in. Genome_a is being used as the
+example genome; all genomes would have similar structure with a sub directory
+holding their prokka results and a file with the non coding regions.</p>
 </div>
 
 
@@ -184,10 +192,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="phenotype.html" class="btn btn-neutral float-right" title="phenotype module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="calander.html" class="btn btn-neutral float-right" title="Project Calander" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="io_utils.html" class="btn btn-neutral float-left" title="io_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="overview.html" class="btn btn-neutral float-left" title="Project Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

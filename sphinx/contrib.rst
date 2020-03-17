@@ -50,6 +50,13 @@ repo. To do this run these commands from the CoRNonCOB directory.
    rm -r ./docs/html
 
 
+Or just run this command from the sphinx directory to do all of that in one go.
+
+.. code-block:: bash
+
+   make html && cd .. && cp -r ./docs/html/. ./docs/. && rm -r ./docs/html 
+
+
 Testing
 -------
 If you want to test your changes before pushing, just do the same make process

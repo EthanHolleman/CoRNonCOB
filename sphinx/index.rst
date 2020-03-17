@@ -12,6 +12,7 @@ Welcome to CoRNonCOB's documentation!
 
    quickstart
    overview
+   files
    calander
    modules
    contrib
