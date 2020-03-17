@@ -1,5 +1,6 @@
-from io_utils import parse_gff
-from io_utils import convert_genome_to_list
+import subprocess
+
+from io_utils import convert_genome_to_list, if_not_exists_make, parse_gff
 from sequence import Sequence
 
 
@@ -42,7 +43,18 @@ class Genome():
         This function will run prokka to find predicted gene locations for
         the instance of Genome it is called on.
         '''
+        # TODO: Get this function woring with correct variable names
+        # and output paths organized
+        # will need to make new folder for prokka results for each genome
+        # that runs gene prediction
         pass
+        prokka_dir = if_not_exists_make(output_dir, results_dir_name)
+
+        cmd = [path_to_exec, '--outdir', prokka_dir,
+                '--cpus', str(threads), '--force', input_file]
+        subprocess.call(cmd)
+
+        return prokka_dir
     # run gene prediction methods here
 
     def get_non_coding_regions(self):

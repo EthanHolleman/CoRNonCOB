@@ -87,6 +87,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Project Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="files.html">Output File Structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calander.html">Project Calander</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Adding to this Site</a><ul>
@@ -197,6 +198,10 @@ way I guess). Then delete the html directory and push your changes to the
 repo. To do this run these commands from the CoRNonCOB directory.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp -r ./docs/html/. ./docs/.
 rm -r ./docs/html
+</pre></div>
+</div>
+<p>Or just run this command from the sphinx directory to do all of that in one go.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make html <span class="o">&amp;&amp;</span> <span class="nb">cd</span> .. <span class="o">&amp;&amp;</span> cp -r ./docs/html/. ./docs/. <span class="o">&amp;&amp;</span> rm -r ./docs/html
 </pre></div>
 </div>
 </div>
