@@ -38,7 +38,8 @@ class Genome():
     def __len__(self):
         return len(self.non_coding_seqs)
 
-    def make_gene_predictions(self):
+    def make_gene_predictions(self,output_dir, threads, path_to_exec= 'prokka',
+                              results_dir_name='prokka_results'):
         '''
         This function will run prokka to find predicted gene locations for
         the instance of Genome it is called on.
@@ -49,6 +50,8 @@ class Genome():
         # that runs gene prediction
         pass
         prokka_dir = if_not_exists_make(output_dir, results_dir_name)
+
+        input_file = self.genome_file
 
         cmd = [path_to_exec, '--outdir', prokka_dir,
                 '--cpus', str(threads), '--force', input_file]
