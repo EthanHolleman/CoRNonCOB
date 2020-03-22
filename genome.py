@@ -2,12 +2,12 @@ import subprocess
 import os
 
 from io_utils import convert_genome_to_list, if_not_exists_make, parse_gff, convert_genome_to_header_dict
-from sequence import Sequence
+from sequence import NoncodingSeq
 
 
 class Genome():
     '''
-    Representation of an individual bacterial genome. Stores its sequence files
+    Representation of an individual bacterial genome. Stores its NoncodingSeq files
     and has methods for predicting coding regions and then retreiving
     non-coding regions
 
@@ -17,12 +17,16 @@ class Genome():
     :param non_coding_file: string, filepath to fasta of non-coding regions. Default = None
     '''
 
-    def __init__(self, genome_file, phenotype, gene_prediction_file=None, non_coding_file=None):
+    def __init__(self, genome_file, phenotype, pheno_dir,
+                 gene_prediction_file=None, non_coding_file=None):
+        
         self.genome_file = genome_file
+        self.genome_dict = convert_genome_to_header_dict(self.genome_file)
         self.phenotype = phenotype
         self.gene_prediction_file = gene_prediction_file
         self.non_coding_file = non_coding_file
         self.non_coding_seqs = []
+        self.output_dir = if_not_exists_make(pheno_dir, os.path.basename(genome_file))
         # potentially change to dictionary to allow non coding seq
         # look up by start location if that is needed later
 
@@ -75,47 +79,54 @@ class Genome():
 
         coding_regions_dict = {}
 
-        # make dictionary based on sequence headers. Each header key is mapped
+        # make dictionary based on NoncodingSeq headers. Each header key is mapped
         # to a list of tuples. Each tuple contains the start and stop location
         # for a predicted gene
 
-        genome = convert_genome_to_header_dict(self.genome_file)
-
+        
         for header, start, stop in coding_regions:
             start, stop = int(start), int(stop)
             if header in coding_regions_dict:
                 coding_regions_dict[header].append((start, stop))
             else:
                 coding_regions_dict[header] = [(start, stop)]
+        
+        # sort the coding regions for eac key (header) in coding_regions_dict
+        for header, cordinates in coding_regions_dict.items():
+            coding_regions_dict[header] = sorted(cordinates, key=lambda  x: x[0])
+            # sort by start position of the predicted coding region
 
         for header, coding_regions_list in coding_regions_dict.items():
-            working_seq = genome[header]
+            # iterate through all pairs of headers and coding regions
+            working_seq = self.genome_dict[header]  # get the sequence for the current header
             cur_non_coding_string = ''
             i, j = 0, 0
             start, stop = coding_regions_list[j]
             while True:
-                if i < start:
+                if i < start:  # at position before gene
                     cur_non_coding_string += working_seq[i]
                     i += 1
-                else:
+                else:  # in a gene
+                    description = '{}.{}'.format(header, i)
                     self.non_coding_seqs.append(
-                        Sequence(cur_non_coding_string, i))
+                        NoncodingSeq(description, cur_non_coding_string, i))
                     cur_non_coding_string = ''
-                    i = stop
+                    i = stop  # jump to end of the gene and get cordinates
+                    # for next coding region
 
                     j += 1
                     if j < len(coding_regions_list):
                         start, stop = coding_regions_list[j]
                     else:
                         self.non_coding_seqs.append(
-                            Sequence(''.join(working_seq[i:]), i))
+                            NoncodingSeq(description, ''.join(working_seq[i:]), i))
                         break
 
     def translate_non_coding_seqs(self):
         '''
-        Iterates through the non coding sequences stored in non_coding_seqs
+        Iterates through the non coding NoncodingSeqs stored in non_coding_seqs
         and calls translation_siz_shooter to translate the nucleotide
-        sequence into all six reading frames.
+        NoncodingSeq into all six reading frames.
         '''
         for ncs in self.non_coding_seqs:
             ncs.translation_six_shooter()
@@ -123,9 +134,10 @@ class Genome():
     def write_peptides_to_fasta_file(self, output_dir, stop_codon_symbol='*', min_len=6):
         '''
         DRAFT
+        
         After the noncoding peptides have been translated this function is
         called to write those peptides to a file so a motif finding or
-        clustering program can find conserved and or differential sequences.
+        clustering program can find conserved and or differential NoncodingSeqs.
         Currently the headers for each peptide are pretty minimal and will be
         reworked to include more info soon.
 
@@ -144,7 +156,7 @@ class Genome():
                     peptides = str(frame).split(stop_codon_symbol)
                     for j, pep in enumerate(peptides):
                         if len(pep) >= min_len:
-                            fp.write('>frame {} seq {}\n'.format(i, j))
+                            fp.write('>{}_{}_{}\n'.format(noncoding_seq.description, i, j))
                             fp.write(pep + '\n')
                     # write the individual peptides
 

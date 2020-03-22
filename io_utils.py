@@ -107,6 +107,8 @@ def parse_gff(gff_path, *args, header=False):
 
 def convert_genome_to_list(genome_path, format='fasta'):
     '''
+    DEPRECIATED
+    
     Takes in the path to a genome in the format specified by the format
     variable. Genome file is read using SeqIO from Biopython and if the file
     contains multible records the nucleotide sequences are appended to one
