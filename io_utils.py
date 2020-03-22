@@ -58,6 +58,19 @@ def read_phenotype_map(map_path):
     # Should return a dictionary key = filepath, value = phenotype
 
 
+def convert_genome_to_header_dict(genome_path, format='fasta'):
+    '''
+    Reads in a file type (likely fasta) and creates a dictionary where keys
+    are the sequence headers and the values are lists of nucleotides. Each
+    index in the list will hold one nucleotide.
+    :param: genome_path: String. Path to the file where genomic sequences are stored
+    :param: format: String. File format. Default = fasta
+    '''
+    records = SeqIO.parse(genome_path, format)
+    return {record.description: list(record.seq) for record in records}
+    
+
+
 def parse_gff(gff_path, *args, header=False):
     '''
     Given a path to a gff file returns as a list of lists the information

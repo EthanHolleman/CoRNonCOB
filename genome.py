@@ -1,6 +1,7 @@
 import subprocess
+import os
 
-from io_utils import convert_genome_to_list, if_not_exists_make, parse_gff
+from io_utils import convert_genome_to_list, if_not_exists_make, parse_gff, convert_genome_to_header_dict
 from sequence import Sequence
 
 
@@ -38,7 +39,7 @@ class Genome():
     def __len__(self):
         return len(self.non_coding_seqs)
 
-    def make_gene_predictions(self,output_dir, threads, path_to_exec= 'prokka',
+    def make_gene_predictions(self, output_dir, threads, path_to_exec='prokka',
                               results_dir_name='prokka_results'):
         '''
         This function will run prokka to find predicted gene locations for
@@ -54,7 +55,7 @@ class Genome():
         input_file = self.genome_file
 
         cmd = [path_to_exec, '--outdir', prokka_dir,
-                '--cpus', str(threads), '--force', input_file]
+               '--cpus', str(threads), '--force', input_file]
         subprocess.call(cmd)
 
         return prokka_dir
@@ -69,30 +70,83 @@ class Genome():
         file and store the path to that file in the non_coding_file
         attribute.
         '''
-        start_stop_list = parse_gff(self.gene_prediction_file, 3, 4)
-        genome = convert_genome_to_list(self.genome_file)
-        cur_non_coding_string = ''
-        i, j = 0, 0
-        start, stop = start_stop_list[j]
+        coding_regions = parse_gff(self.gene_prediction_file, 0, 3, 4)
+        # read the gff file for predicted coding regions
 
-        while True:
-            if i < start:
-                cur_non_coding_string += genome[i]
-                i += 1
+        coding_regions_dict = {}
+
+        # make dictionary based on sequence headers. Each header key is mapped
+        # to a list of tuples. Each tuple contains the start and stop location
+        # for a predicted gene
+
+        genome = convert_genome_to_header_dict(self.genome_file)
+
+        for header, start, stop in coding_regions:
+            start, stop = int(start), int(stop)
+            if header in coding_regions_dict:
+                coding_regions_dict[header].append((start, stop))
             else:
-                self.non_coding_seqs.append(Sequence(cur_non_coding_string, i))
-                cur_non_coding_string = ''
-                i = stop
-                # need to look into this more because the positions get from
-                # the actaul gff file will be base one while i is refering
-                # to positions in the genome in base 0
-                j += 1
-                if j < len(start_stop_list):
-                    start, stop = start_stop_list[j]
+                coding_regions_dict[header] = [(start, stop)]
+
+        for header, coding_regions_list in coding_regions_dict.items():
+            working_seq = genome[header]
+            cur_non_coding_string = ''
+            i, j = 0, 0
+            start, stop = coding_regions_list[j]
+            while True:
+                if i < start:
+                    cur_non_coding_string += working_seq[i]
+                    i += 1
                 else:
                     self.non_coding_seqs.append(
-                        ''.join(Sequence(genome[i:], i)))
-                    break
+                        Sequence(cur_non_coding_string, i))
+                    cur_non_coding_string = ''
+                    i = stop
+
+                    j += 1
+                    if j < len(coding_regions_list):
+                        start, stop = coding_regions_list[j]
+                    else:
+                        self.non_coding_seqs.append(
+                            Sequence(''.join(working_seq[i:]), i))
+                        break
+
+    def translate_non_coding_seqs(self):
+        '''
+        Iterates through the non coding sequences stored in non_coding_seqs
+        and calls translation_siz_shooter to translate the nucleotide
+        sequence into all six reading frames.
+        '''
+        for ncs in self.non_coding_seqs:
+            ncs.translation_six_shooter()
+
+    def write_peptides_to_fasta_file(self, output_dir, stop_codon_symbol='*', min_len=6):
+        '''
+        DRAFT
+        After the noncoding peptides have been translated this function is
+        called to write those peptides to a file so a motif finding or
+        clustering program can find conserved and or differential sequences.
+        Currently the headers for each peptide are pretty minimal and will be
+        reworked to include more info soon.
+
+        :param: output_dir: String. Path to directory where fasta file will be written
+        :param: stop_codon_symbol: Char. Symbol used for stop codon in translated seqs. Default = '*'
+        :param: min_len: Int. Minimum length required for peptide to be written.
+        '''
+        file_basename = '{}_peptides'.format(
+            os.path.basename(self.genome_file))
+        file_path = os.path.join(output_dir, file_basename)
+        with open(file_path, 'w') as fp:
+            for noncoding_seq in self.non_coding_seqs:
+                # get noncoding seq objects
+                for i, frame in enumerate(noncoding_seq.frames):
+                    # get individual reading fram
+                    peptides = str(frame).split(stop_codon_symbol)
+                    for j, pep in enumerate(peptides):
+                        if len(pep) >= min_len:
+                            fp.write('>frame {} seq {}\n'.format(i, j))
+                            fp.write(pep + '\n')
+                    # write the individual peptides
 
     # read in the genome file
     # get positions of coding regions

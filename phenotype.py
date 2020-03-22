@@ -3,6 +3,13 @@ import os
 from genome import Genome
 
 
+
+# TODO
+# phenotype objects should create their own directory within the given
+# run directory then potentially hand that directory off to genome objects
+# when they are created and in genome __init__ functions genome instance
+# will make its own directory with the phenotype dir as the parent directory
+
 class Phenotype():
 
     def __init__(self, genome_dir, phenotype=None):
