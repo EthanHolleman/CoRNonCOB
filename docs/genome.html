@@ -171,9 +171,9 @@
 <span id="genome-module"></span><h1>genome module<a class="headerlink" href="#module-genome" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="genome.Genome">
-<em class="property">class </em><code class="sig-prename descclassname">genome.</code><code class="sig-name descname">Genome</code><span class="sig-paren">(</span><em class="sig-param">genome_file</em>, <em class="sig-param">phenotype</em>, <em class="sig-param">gene_prediction_file=None</em>, <em class="sig-param">non_coding_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">genome.</code><code class="sig-name descname">Genome</code><span class="sig-paren">(</span><em class="sig-param">genome_file</em>, <em class="sig-param">phenotype</em>, <em class="sig-param">pheno_dir</em>, <em class="sig-param">gene_prediction_file=None</em>, <em class="sig-param">non_coding_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Representation of an individual bacterial genome. Stores its sequence files
+<p>Representation of an individual bacterial genome. Stores its NoncodingSeq files
 and has methods for predicting coding regions and then retreiving
 non-coding regions</p>
 <dl class="field-list simple">
@@ -198,9 +198,39 @@ attribute.</p>
 
 <dl class="method">
 <dt id="genome.Genome.make_gene_predictions">
-<code class="sig-name descname">make_gene_predictions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome.make_gene_predictions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">make_gene_predictions</code><span class="sig-paren">(</span><em class="sig-param">output_dir</em>, <em class="sig-param">threads</em>, <em class="sig-param">path_to_exec='prokka'</em>, <em class="sig-param">results_dir_name='prokka_results'</em><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome.make_gene_predictions" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function will run prokka to find predicted gene locations for
 the instance of Genome it is called on.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="genome.Genome.translate_non_coding_seqs">
+<code class="sig-name descname">translate_non_coding_seqs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome.translate_non_coding_seqs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates through the non coding NoncodingSeqs stored in non_coding_seqs
+and calls translation_siz_shooter to translate the nucleotide
+NoncodingSeq into all six reading frames.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="genome.Genome.write_peptides_to_fasta_file">
+<code class="sig-name descname">write_peptides_to_fasta_file</code><span class="sig-paren">(</span><em class="sig-param">output_dir</em>, <em class="sig-param">stop_codon_symbol='*'</em>, <em class="sig-param">min_len=6</em><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome.write_peptides_to_fasta_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>DRAFT</p>
+<p>After the noncoding peptides have been translated this function is
+called to write those peptides to a file so a motif finding or
+clustering program can find conserved and or differential NoncodingSeqs.
+Currently the headers for each peptide are pretty minimal and will be
+reworked to include more info soon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>output_dir: String. Path to directory where fasta file will be written</p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>stop_codon_symbol: Char. Symbol used for stop codon in translated seqs. Default = ‘*’</p>
+</dd>
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>min_len: Int. Minimum length required for peptide to be written.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

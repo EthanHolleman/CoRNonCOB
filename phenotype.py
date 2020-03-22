@@ -11,19 +11,15 @@ from io_utils import if_not_exists_make
 # will make its own directory with the phenotype dir as the parent directory
 
 class Phenotype():
-     '''
+    '''
     Designed to represent a specific
     bacterial phenotype that may contain many individual genomes of that
     phenotype. Phenotype objects are currently the outermost layer of the
     program.
-    :param genome_dir: String. Path to directory containing all genomes \
-        that are to be contained in the phenotype instance.
-    :param run_dir: String. Path to outermost directory and is supplied by \
-        the user. Creating an instance of phenotype will create a new \
-        directory within the run_dir.
-    :param phenotype: String. Description of the phenotype. If none is \
-        provided assumes that the basename of the genome_dir is the \
-        phenotype name. 
+    
+    :param genome_dir: String. Path to directory containing all genomes that are to be contained in the phenotype instance.
+    :param run_dir: String. Path to outermost directory and is supplied by the user. Creating an instance of phenotype will create a new directory within the run_dir.
+    :param phenotype: String. Description of the phenotype. If none is provided assumes that the basename of the genome_dir is the phenotype name. 
     '''
 
     def __init__(self, genome_dir, run_dir, phenotype=None):

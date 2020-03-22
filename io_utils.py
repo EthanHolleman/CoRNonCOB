@@ -10,8 +10,8 @@ def if_not_exists_make(parent_dir_path, child_dir_name):
     whether it was made or not. Does not search the parent directory
     recursively.
 
-    :param: parent_dir_path: String; Path to the parent directory
-    :param: child_dir_name: String; Basename of directory to check if exists
+    :param parent_dir_path: String; Path to the parent directory
+    :param child_dir_name: String; Basename of directory to check if exists
     '''
 
     child_dir_path = os.path.join(parent_dir_path, child_dir_name)
@@ -26,8 +26,8 @@ def filter_prakka_files(prokka_results_path, *args):
     prokka results have been written. Select the filetypes that should be
     returned by including the file extensions without the . as arguements.
 
-    :params: prokka_results_path: String; Path to directory containing prokka results
-    :params: *args: Strings; File extensions for the types of files to be returned
+    :param prokka_results_path: String; Path to directory containing prokka results
+    :param *args: Strings; File extensions for the types of files to be returned
     '''
 
     args, selected_files = set(args), []

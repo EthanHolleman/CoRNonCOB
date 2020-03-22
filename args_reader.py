@@ -5,8 +5,10 @@ import sys
 def get_args():
     '''
     Uses argparse to get any command line arguements that we might want
-    to pass in to the program. Returns a parsed args object
+    to pass in to the program. Returns a parsed args object. Running the main
+    module with --h will print out arguement descriptions.
     '''
+    
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('-p1', help='Path to directory containing all genomes of phenotype 1')
     parser.add_argument('-p2', help='Path to directory containing all genome of phenotype 2')

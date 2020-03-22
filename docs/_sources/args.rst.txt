@@ -1,7 +1,7 @@
 args module
 ===========
 
-.. automodule:: args
+.. automodule:: args_reader
     :members:
     :undoc-members:
     :show-inheritance:
