@@ -10,8 +10,8 @@ def if_not_exists_make(parent_dir_path, child_dir_name):
     whether it was made or not. Does not search the parent directory
     recursively.
 
-    :param: parent_dir_path: String; Path to the parent directory
-    :param: child_dir_name: String; Basename of directory to check if exists
+    :param parent_dir_path: String; Path to the parent directory
+    :param child_dir_name: String; Basename of directory to check if exists
     '''
 
     child_dir_path = os.path.join(parent_dir_path, child_dir_name)
@@ -26,8 +26,8 @@ def filter_prokka_files(prokka_results_path, *args):
     prokka results have been written. Select the filetypes that should be
     returned by including the file extensions without the . as arguements.
 
-    :params: prokka_results_path: String; Path to directory containing prokka results
-    :params: *args: Strings; File extensions for the types of files to be returned
+    :param prokka_results_path: String; Path to directory containing prokka results
+    :param *args: Strings; File extensions for the types of files to be returned
     '''
 
     args, selected_files = set(args), []
@@ -56,6 +56,19 @@ def read_phenotype_map(map_path):
     # to make phenotype object from this kind of input
 
     # Should return a dictionary key = filepath, value = phenotype
+
+
+def convert_genome_to_header_dict(genome_path, format='fasta'):
+    '''
+    Reads in a file type (likely fasta) and creates a dictionary where keys
+    are the sequence headers and the values are lists of nucleotides. Each
+    index in the list will hold one nucleotide.
+    :param: genome_path: String. Path to the file where genomic sequences are stored
+    :param: format: String. File format. Default = fasta
+    '''
+    records = SeqIO.parse(genome_path, format)
+    return {record.description: list(record.seq) for record in records}
+    
 
 
 def parse_gff(gff_path, *args, header=False):
@@ -94,6 +107,8 @@ def parse_gff(gff_path, *args, header=False):
 
 def convert_genome_to_list(genome_path, format='fasta'):
     '''
+    DEPRECIATED
+    
     Takes in the path to a genome in the format specified by the format
     variable. Genome file is read using SeqIO from Biopython and if the file
     contains multible records the nucleotide sequences are appended to one

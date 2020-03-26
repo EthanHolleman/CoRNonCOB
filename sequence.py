@@ -2,19 +2,20 @@ from Bio.Seq import Seq
 from Bio.Seq import translate
 
 
-class Sequence():
+class NoncodingSeq():
     '''
     Represents individual nucleotide sequences within a larger genome
     
     :param seq: String, the actual nucleotide sequence. Converted to Biopython Seq object when passed in
+    :param description: String. Header of the fasta entry for the original sequence
     :param start: int, start position of the sequence in its genome
     :param seq_type: string, some identifier for the sequence type i.e 'noncoding'
     '''
 
-    def __init__(self, seq, start, seq_type='noncoding'):
+    def __init__(self, description, seq, start):
+        self.description = description
         self.seq = Seq(seq)
         self.start = int(start)
-        self.seq_type = seq_type
         self.frames = []
 
     def translation_six_shooter(self, to_stop=False, stop_codon_symbol='*'):
@@ -54,3 +55,6 @@ class Sequence():
         index.
         '''
         return self.frames[index]
+
+    def __repr__(self):
+        return '{}\n{}\n{}'.format(self.seq, self.start, self.seq_type)
