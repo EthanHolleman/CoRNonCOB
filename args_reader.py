@@ -16,6 +16,7 @@ def get_args():
     parser.add_argument('-t', default=2, help='Number of threads')
     parser.add_argument('-n', default='corncob', help='Run name')
     parser.add_argument('-k', default='prakka', help='Path to prakka executable if not in PATH variable')
+    parser.add_argument('-t', default=False, help='If True, runs program in test mode')
     # potentially remove
     
     

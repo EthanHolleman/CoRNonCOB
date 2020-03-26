@@ -4,7 +4,7 @@ from Bio.Seq import translate
 
 class NoncodingSeq():
     '''
-    Represents individual nucleotide sequences within a larger genome
+    Represents individual nucleotide noncoding seequence within a larger genome.
     
     :param seq: String, the actual nucleotide sequence. Converted to Biopython Seq object when passed in
     :param description: String. Header of the fasta entry for the original sequence

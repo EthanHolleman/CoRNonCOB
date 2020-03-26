@@ -71,6 +71,18 @@ class Phenotype():
         instance.
         '''
         pass
+    
+    def pull_peptides(self, prokka_exec='prokka'):
+        '''
+        Wrapper around methods in the Genome class. This methos iterates
+        through all genomes in a phenotype and uses prokka to make gene
+        predictions, identifies non-coding regions and then translates
+        those regions into six reading frames.
+        '''
+        for genome in self.genomes:
+            genome.make_gene_predictions(path_to_exec=prokka_exec)
+            #genome.get_non_coding_regions()
+            #genome.translate_non_coding_seqs()
 
     def compare_conserved_sequences(self, other_phenotype):
         if self.phenotype != other_phenotype:
