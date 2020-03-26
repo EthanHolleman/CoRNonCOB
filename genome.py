@@ -1,8 +1,10 @@
 import subprocess
 import os
 
+
 from io_utils import convert_genome_to_list, if_not_exists_make, parse_gff, convert_genome_to_header_dict
 from sequence import NoncodingSeq
+
 
 
 class Genome():
@@ -61,8 +63,8 @@ class Genome():
         cmd = [path_to_exec, '--outdir', prokka_dir,
                '--cpus', str(threads), '--force', input_file]
         subprocess.call(cmd)
-
-        return prokka_dir
+        output_file = filter_prokka_files(output_dir + '/prokka_results','gff')[0]
+        return output_file
     # run gene prediction methods here
 
     def get_non_coding_regions(self):
