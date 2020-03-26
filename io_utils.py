@@ -20,7 +20,7 @@ def if_not_exists_make(parent_dir_path, child_dir_name):
     return child_dir_path
 
 
-def filter_prakka_files(prokka_results_path, *args):
+def filter_prokka_files(prokka_results_path, *args):
     '''
     Function for returning specific types of files from a directory where
     prokka results have been written. Select the filetypes that should be
