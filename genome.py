@@ -56,7 +56,7 @@ class Genome():
         cmd = [path_to_exec, '--outdir', prokka_dir,
                 '--cpus', str(threads), '--force', input_file]
         subprocess.call(cmd)
-        output_file = filter_prokka_files(output_dir + '/prokka_results','fna')[0]
+        output_file = filter_prokka_files(output_dir + '/prokka_results','gff')[0]
         return output_file
     # run gene prediction methods here
 
