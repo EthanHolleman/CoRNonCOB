@@ -110,7 +110,7 @@ class Phenotype():
             if len(participating_genomes) / len(self.genomes) >= con:
                 # percentage of genomes that participate in this cluster
                 # is greater than or equal to con threshold
-                conserved_records.append((rep_seq, len(cluster))
+                conserved_records.append((rep_seq, len(cluster)))
         
         
         # at this point conserved records hold formated cdhit records of
@@ -121,12 +121,6 @@ class Phenotype():
         # conserved records list by doing some kind of query against the
         # genome identified by its genome id
                 
-                
-                
-                
-                
-                
-
     def pull_peptides(self, prokka_exec='prokka'):
         '''
         Wrapper around methods in the Genome class. This methos iterates
