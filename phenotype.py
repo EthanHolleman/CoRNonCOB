@@ -18,9 +18,14 @@ class Phenotype():
     phenotype. Phenotype objects are currently the outermost layer of the
     program.
 
-    :param genome_dir: String. Path to directory containing all genomes that are to be contained in the phenotype instance.
-    :param run_dir: String. Path to outermost directory and is supplied by the user. Creating an instance of phenotype will create a new directory within the run_dir.
-    :param phenotype: String. Description of the phenotype. If none is provided assumes that the basename of the genome_dir is the phenotype name. 
+    :param genome_dir: String. Path to directory containing all \
+        genomes that are to be contained in the phenotype instance.
+    :param run_dir: String. Path to outermost directory and is supplied \
+        by the user. Creating an instance of phenotype will create a new \
+        directory within the run_dir.
+    :param phenotype: String. Description of the phenotype. If none is \
+        provided assumes that the basename of the genome_dir is the \
+        phenotype name. 
     '''
 
     def __init__(self, genome_dir, run_dir, phenotype=None):
@@ -79,7 +84,8 @@ class Phenotype():
         instance.
         
         :param cdhit_exec: String. Path to cdhit executable default = cdhit
-        :param s: String. Num 0-1 sets min length difference between rep seq and subject seqs
+        :param s: String. Num 0-1 sets min length difference between rep seq \
+        and subject seqs
         :param con: Int. Percentage of genomes that must have a peptide in a \
         cluster for that cluster to be considered conserved.
         '''
@@ -133,11 +139,3 @@ class Phenotype():
             genome.get_non_coding_regions()
             genome.translate_non_coding_seqs()
             genome.write_peptides_to_fasta_file()
-
-    def compare_conserved_sequences(self, other_phenotype):
-        if self.phenotype != other_phenotype:
-            # do the comparison since same phenotype
-            # will need to do some kind of statistical test here
-            # good to provide p values and confidence intervals
-
-            return shared_seqs, unique_seqs  # want unique to A and to B

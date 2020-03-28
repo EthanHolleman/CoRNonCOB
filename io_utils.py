@@ -26,7 +26,8 @@ def filter_prokka_files(prokka_results_path, *args):
     prokka results have been written. Select the filetypes that should be
     returned by including the file extensions without the . as arguements.
 
-    :param prokka_results_path: String; Path to directory containing prokka results
+    :param prokka_results_path: String; Path to directory containing \
+    prokka results
     :param *args: Strings; File extensions for the types of files to be returned
     '''
 
@@ -63,7 +64,8 @@ def convert_genome_to_header_dict(genome_path, format='fasta'):
     Reads in a file type (likely fasta) and creates a dictionary where keys
     are the sequence headers and the values are lists of nucleotides. Each
     index in the list will hold one nucleotide.
-    :param: genome_path: String. Path to the file where genomic sequences are stored
+    :param: genome_path: String. Path to the file where genomic \
+    sequences are stored
     :param: format: String. File format. Default = fasta
     '''
     records = SeqIO.parse(genome_path, format)

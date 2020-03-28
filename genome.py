@@ -12,10 +12,14 @@ class Genome():
     and has methods for predicting coding regions and then retreiving
     non-coding regions
 
-    :param genome_file: string, filepath to fasta formated file of the complete bacterial genome
-    :param phenotype: string, string that acts as a key for identifying the bacterial phenotype
-    :param gene_prediction_file: string, filepath to gff generated via prokka. Default = None
-    :param non_coding_file: string, filepath to fasta of non-coding regions. Default = None
+    :param genome_file: string, filepath to fasta formated file of \
+        the complete bacterial genome
+    :param phenotype: string, string that acts as a key for identifying \
+        the bacterial phenotype
+    :param gene_prediction_file: string, filepath to gff generated via prokka.\
+        Default = None
+    :param non_coding_file: string, filepath to fasta of non-coding regions.\
+        Default = None
     '''
 
     def __init__(self, genome_file, phenotype, pheno_dir,
@@ -45,11 +49,10 @@ class Genome():
 
     def __len__(self):
         return len(self.non_coding_seqs)
-    
+
     def __getitem__(self, peptide_header=None):
         if peptide_header:
             pass
-            
 
     def make_gene_predictions(self, threads=2, path_to_exec='prokka',
                               results_dir_name='prokka_results'):
@@ -158,11 +161,11 @@ class Genome():
         '''
         if output_dir == None:
             output_dir = self.output_dir
-        
+
         file_basename = '{}_peptides'.format(
             os.path.basename(self.genome_file))
         self.non_coding_file = os.path.join(output_dir, file_basename)
-        
+
         with open(self.non_coding_file, 'w') as fp:
             for noncoding_seq in self.non_coding_seqs:
                 # get noncoding seq objects
@@ -180,4 +183,3 @@ class Genome():
     # read in the genome file
     # get positions of coding regions
     # extract the non-coding regions and write to a file
-
