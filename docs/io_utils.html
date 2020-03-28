@@ -191,8 +191,8 @@ nucleotide.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="io_utils.filter_prakka_files">
-<code class="sig-prename descclassname">io_utils.</code><code class="sig-name descname">filter_prakka_files</code><span class="sig-paren">(</span><em class="sig-param">prokka_results_path</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#io_utils.filter_prakka_files" title="Permalink to this definition">¶</a></dt>
+<dt id="io_utils.filter_prokka_files">
+<code class="sig-prename descclassname">io_utils.</code><code class="sig-name descname">filter_prokka_files</code><span class="sig-paren">(</span><em class="sig-param">prokka_results_path</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#io_utils.filter_prokka_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function for returning specific types of files from a directory where
 prokka results have been written. Select the filetypes that should be
 returned by including the file extensions without the . as arguements.</p>
@@ -222,6 +222,32 @@ recursively.</p>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="io_utils.parse_cdhit_output_file">
+<code class="sig-prename descclassname">io_utils.</code><code class="sig-name descname">parse_cdhit_output_file</code><span class="sig-paren">(</span><em class="sig-param">clstr_file</em><span class="sig-paren">)</span><a class="headerlink" href="#io_utils.parse_cdhit_output_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates through a cd-hit output file and returns a list of clusters.
+The index of the cluster is equal to the cluster number. Each index contains
+the sequences that cd-hit assigned to that cluster represented as a list
+of tuples. Over data structure looks like [[()]]. Formating of the data
+inside the tuples which represent the actual sequences is determined
+by the parse_cdhit_record function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="io_utils.parse_cdhit_record">
+<code class="sig-prename descclassname">io_utils.</code><code class="sig-name descname">parse_cdhit_record</code><span class="sig-paren">(</span><em class="sig-param">record</em>, <em class="sig-param">genome_id=True</em><span class="sig-paren">)</span><a class="headerlink" href="#io_utils.parse_cdhit_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses a single record representing a peptide sequence in a cdhit output
+file. Returns a tuple of that rows contents with extra characters and
+white spaces cleaned up. Tuple contains the index of the sequence in the
+cluster, the length of the sequence, the header of the sequence and the
+alignment information in that order. If genome_id is True meaning a genome
+id has been appended the end of each header this function will add that
+on to the end of the tuple.</p>
+<p>Currently assumes that cd-hit was run with -d 0 so full header is included
+in the output and -p 1 so alignment statistics are printed to the output
+file.</p>
 </dd></dl>
 
 <dl class="function">

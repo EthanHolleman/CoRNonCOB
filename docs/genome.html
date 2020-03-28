@@ -198,7 +198,7 @@ attribute.</p>
 
 <dl class="method">
 <dt id="genome.Genome.make_gene_predictions">
-<code class="sig-name descname">make_gene_predictions</code><span class="sig-paren">(</span><em class="sig-param">output_dir</em>, <em class="sig-param">threads</em>, <em class="sig-param">path_to_exec='prokka'</em>, <em class="sig-param">results_dir_name='prokka_results'</em><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome.make_gene_predictions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">make_gene_predictions</code><span class="sig-paren">(</span><em class="sig-param">threads=2</em>, <em class="sig-param">path_to_exec='prokka'</em>, <em class="sig-param">results_dir_name='prokka_results'</em><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome.make_gene_predictions" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function will run prokka to find predicted gene locations for
 the instance of Genome it is called on.</p>
 </dd></dl>
@@ -213,7 +213,7 @@ NoncodingSeq into all six reading frames.</p>
 
 <dl class="method">
 <dt id="genome.Genome.write_peptides_to_fasta_file">
-<code class="sig-name descname">write_peptides_to_fasta_file</code><span class="sig-paren">(</span><em class="sig-param">output_dir</em>, <em class="sig-param">stop_codon_symbol='*'</em>, <em class="sig-param">min_len=6</em><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome.write_peptides_to_fasta_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write_peptides_to_fasta_file</code><span class="sig-paren">(</span><em class="sig-param">output_dir=None</em>, <em class="sig-param">stop_codon_symbol='*'</em>, <em class="sig-param">min_len=6</em><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome.write_peptides_to_fasta_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>DRAFT</p>
 <p>After the noncoding peptides have been translated this function is
 called to write those peptides to a file so a motif finding or
