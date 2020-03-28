@@ -130,26 +130,25 @@ def parse_cdhit_record(record, genome_id=True):
     alignment information in that order. If genome_id is True meaning a genome
     id has been appended the end of each header this function will add that
     on to the end of the tuple.
-    
+
     Currently assumes that cd-hit was run with -d 0 so full header is included
     in the output and -p 1 so alignment statistics are printed to the output
     file. 
     '''
     index = record[0]
     length = record.split('\t')[0][:2]
-    header, alignment = record.split(',')[1].split('...')    
+    header, alignment = record.split(',')[1].split('...')
     alignment = alignment.strip()
     if alignment != '*':  # is not a representative sequence
         alignment = alignment.split(' ')[-1]
-    
+
     pretag = [index, length, header, alignment]
     if genome_id:
         tag = header.split('_')[-1].split('...')[0]
         return tuple(pretag + [tag])
     else:
         return tuple(pretag)
-        
-    
+
 
 def parse_cdhit_output_file(clstr_file):
     '''

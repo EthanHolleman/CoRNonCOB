@@ -2,7 +2,7 @@ import os
 import subprocess
 
 from genome import Genome
-from io_utils import if_not_exists_make
+from io_utils import if_not_exists_make, parse_cdhit_output_file
 
 
 # TODO
@@ -65,7 +65,7 @@ class Phenotype():
 
         return genomes
 
-    def get_conserved_sequences(self, cdhit_exec='cdhit', s='0.90'):
+    def get_conserved_sequences(self, cdhit_exec='cdhit', s='0.90', con=0.75):
         '''
         WIP
         
@@ -80,6 +80,8 @@ class Phenotype():
         
         :param cdhit_exec: String. Path to cdhit executable default = cdhit
         :param s: String. Num 0-1 sets min length difference between rep seq and subject seqs
+        :param con: Int. Percentage of genomes that must have a peptide in a \
+        cluster for that cluster to be considered conserved.
         '''
         
         phenotype_peptides = os.path.join(
@@ -95,6 +97,35 @@ class Phenotype():
         # concat all individual peptide files
         cat_call = subprocess.call(cat_cmd)
         cdhit_call = subprocess.call(cd_hit_cmd)  # run cd-hit on cated file
+        
+        clusters = parse_cdhit_output_file(phenotype_peptides + '.clstr')
+        conserved_records = []
+        
+        for cluster in clusters:
+            participating_genomes, rep_seq = set([]), None
+            for record in cluster:
+                if record[-2] == '*':
+                    rep_seq = record
+                participating_genomes.add(record[-1])  # add genome id
+            if len(participating_genomes) / len(self.genomes) >= con:
+                # percentage of genomes that participate in this cluster
+                # is greater than or equal to con threshold
+                conserved_records.append((rep_seq, len(cluster))
+        
+        
+        # at this point conserved records hold formated cdhit records of
+        # representative sequences from clusters that pass the min genome
+        # participation threshold
+        
+        #TODO Recover the actual peptide sequence of all records in the
+        # conserved records list by doing some kind of query against the
+        # genome identified by its genome id
+                
+                
+                
+                
+                
+                
 
     def pull_peptides(self, prokka_exec='prokka'):
         '''
