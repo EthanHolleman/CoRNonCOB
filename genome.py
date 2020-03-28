@@ -152,9 +152,9 @@ class Genome():
         Currently the headers for each peptide are pretty minimal and will be
         reworked to include more info soon.
 
-        :param: output_dir: String. Path to directory where fasta file will be written
-        :param: stop_codon_symbol: Char. Symbol used for stop codon in translated seqs. Default = '*'
-        :param: min_len: Int. Minimum length required for peptide to be written.
+        :param output_dir: String. Path to directory where fasta file will be written
+        :param stop_codon_symbol: Char. Symbol used for stop codon in translated seqs. Default = '*'
+        :param min_len: Int. Minimum length required for peptide to be written.
         '''
         if output_dir == None:
             output_dir = self.output_dir
@@ -180,11 +180,4 @@ class Genome():
     # read in the genome file
     # get positions of coding regions
     # extract the non-coding regions and write to a file
-gff = '/home/ethan/Documents/github/CoRNonCOB/tests/test_depr/Lc40.fasta/PROKKA_03212020.gff'
-gen = '/home/ethan/Documents/ecoli_genome/putonti_seqs/nice/Lc40.fasta'
-g = Genome(gen, 'n', '.', gff)
-#print(g)
-g.get_non_coding_regions()
-g.translate_non_coding_seqs()
-g.write_peptides_to_fasta_file()
-print(g)
+
