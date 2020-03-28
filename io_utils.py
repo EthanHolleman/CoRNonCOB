@@ -68,7 +68,6 @@ def convert_genome_to_header_dict(genome_path, format='fasta'):
     '''
     records = SeqIO.parse(genome_path, format)
     return {record.description: list(record.seq) for record in records}
-    
 
 
 def parse_gff(gff_path, *args, header=False):
@@ -93,7 +92,7 @@ def parse_gff(gff_path, *args, header=False):
             reader = csv.reader(gff, delimiter='\t')
             if header:  # skip header if exists
                 next(reader)
-                
+
             for row in reader:
                 if row[0][0] == '#':  # comment in file
                     continue
@@ -108,7 +107,7 @@ def parse_gff(gff_path, *args, header=False):
 def convert_genome_to_list(genome_path, format='fasta'):
     '''
     DEPRECIATED
-    
+
     Takes in the path to a genome in the format specified by the format
     variable. Genome file is read using SeqIO from Biopython and if the file
     contains multible records the nucleotide sequences are appended to one
@@ -120,3 +119,58 @@ def convert_genome_to_list(genome_path, format='fasta'):
     for record in genome_file:
         genome_string += record.seq
     return [nuc for nuc in genome_string]
+
+
+def parse_cdhit_record(record, genome_id=True):
+    '''
+    Parses a single record representing a peptide sequence in a cdhit output
+    file. Returns a tuple of that rows contents with extra characters and
+    white spaces cleaned up. Tuple contains the index of the sequence in the
+    cluster, the length of the sequence, the header of the sequence and the
+    alignment information in that order. If genome_id is True meaning a genome
+    id has been appended the end of each header this function will add that
+    on to the end of the tuple.
+    
+    Currently assumes that cd-hit was run with -d 0 so full header is included
+    in the output and -p 1 so alignment statistics are printed to the output
+    file. 
+    '''
+    index = record[0]
+    length = record.split('\t')[0][:2]
+    header, alignment = record.split(',')[1].split('...')    
+    alignment = alignment.strip()
+    if alignment != '*':  # is not a representative sequence
+        alignment = alignment.split(' ')[-1]
+    
+    pretag = [index, length, header, alignment]
+    if genome_id:
+        tag = header.split('_')[-1].split('...')[0]
+        return tuple(pretag + [tag])
+    else:
+        return tuple(pretag)
+        
+    
+
+def parse_cdhit_output_file(clstr_file):
+    '''
+    Iterates through a cd-hit output file and returns a list of clusters.
+    The index of the cluster is equal to the cluster number. Each index contains
+    the sequences that cd-hit assigned to that cluster represented as a list
+    of tuples. Over data structure looks like [[()]]. Formating of the data
+    inside the tuples which represent the actual sequences is determined
+    by the parse_cdhit_record function.
+    '''
+    clusters = []  # store all clusters in list cluster num is index in list
+    i = -1
+    with open(clstr_file) as clstr:
+        while clstr:
+            cur_line = clstr.readline().strip()
+            if cur_line:
+                if cur_line[0] == '>':  # new cluster
+                    clusters.append([])
+                    i += 1
+                else:
+                    clusters[i].append(parse_cdhit_record(cur_line))
+            else:
+                break
+        return clusters

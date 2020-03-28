@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 from genome import Genome
 from io_utils import if_not_exists_make
@@ -16,7 +17,7 @@ class Phenotype():
     bacterial phenotype that may contain many individual genomes of that
     phenotype. Phenotype objects are currently the outermost layer of the
     program.
-    
+
     :param genome_dir: String. Path to directory containing all genomes that are to be contained in the phenotype instance.
     :param run_dir: String. Path to outermost directory and is supplied by the user. Creating an instance of phenotype will create a new directory within the run_dir.
     :param phenotype: String. Description of the phenotype. If none is provided assumes that the basename of the genome_dir is the phenotype name. 
@@ -64,14 +65,37 @@ class Phenotype():
 
         return genomes
 
-    def get_conserved_sequences(self):
+    def get_conserved_sequences(self, cdhit_exec='cdhit', s='0.90'):
         '''
+        WIP
+        
+        TODO: Test chhit call is working as expected and add parseing of clstr
+        file. Then need to find conserved seqs within the file and seperate
+        those out into a new file for comparison with the other phenotype.
+        
+        
         Using some metrics and methods pulls out the conserved non-coding
         sequences from a collection of genomes stored in this phenotype
         instance.
+        
+        :param cdhit_exec: String. Path to cdhit executable default = cdhit
+        :param s: String. Num 0-1 sets min length difference between rep seq and subject seqs
         '''
-        pass
-    
+        
+        phenotype_peptides = os.path.join(
+            self.output_dir, f'{self.phenotype}_peptides.fasta')
+        genome_peptides = [genome.non_coding_file for genome in self.genomes]
+        # get all of the peptide file paths in one list
+
+        cat_cmd = ['cat'] + genome_peptides + ['>', phenotype_peptides]
+        cd_hit_cmd = [cdhit_exec, '-in',
+                      phenotype_peptides, '-o', phenotype_peptides, '-d', '0',
+                      '-p', '1', '-s', s]
+
+        # concat all individual peptide files
+        cat_call = subprocess.call(cat_cmd)
+        cdhit_call = subprocess.call(cd_hit_cmd)  # run cd-hit on cated file
+
     def pull_peptides(self, prokka_exec='prokka'):
         '''
         Wrapper around methods in the Genome class. This methos iterates
@@ -81,8 +105,9 @@ class Phenotype():
         '''
         for genome in self.genomes:
             genome.make_gene_predictions(path_to_exec=prokka_exec)
-            #genome.get_non_coding_regions()
-            #genome.translate_non_coding_seqs()
+            genome.get_non_coding_regions()
+            genome.translate_non_coding_seqs()
+            genome.write_peptides_to_fasta_file()
 
     def compare_conserved_sequences(self, other_phenotype):
         if self.phenotype != other_phenotype:
