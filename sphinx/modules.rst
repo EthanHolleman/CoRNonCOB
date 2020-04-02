@@ -10,6 +10,7 @@ Modules
    main
    phenotype
    sequence
+   log
 
 Object Structure
 ----------------
