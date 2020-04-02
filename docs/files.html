@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Output File Structure &mdash; CoRNonCOB 0.1 documentation</title>
+  <title>Understanding the Output File Structure &mdash; CoRNonCOB 0.1 documentation</title>
   
 
   
@@ -88,7 +88,11 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Project Overview</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Output File Structure</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Understanding the Output File Structure</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tree-overview">Tree Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-significant-to-the-user">What is Significant to the User?</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="calander.html">Project Calander</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contrib.html">Adding to this Site</a></li>
@@ -137,7 +141,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Output File Structure</li>
+      <li>Understanding the Output File Structure</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -156,8 +160,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="output-file-structure">
-<h1>Output File Structure<a class="headerlink" href="#output-file-structure" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="understanding-the-output-file-structure">
+<h1>Understanding the Output File Structure<a class="headerlink" href="#understanding-the-output-file-structure" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="tree-overview">
+<h2>Tree Overview<a class="headerlink" href="#tree-overview" title="Permalink to this headline">¶</a></h2>
 <p>This is what I am thinking the output file structure should look like ish</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.
 └── run_name
@@ -178,10 +184,18 @@
 <p>User supplies the parent directory and the run name and the program creates
 the rest of the directory structure which will approximately reflect the way
 objects are set up in the pipeline.</p>
-<p>conserved_motifs.fasta and unique_motifs.fasta just represent the final
-output that the user would be interested in. Genome_a is being used as the
-example genome; all genomes would have similar structure with a sub directory
-holding their prokka results and a file with the non coding regions.</p>
+</div>
+<div class="section" id="what-is-significant-to-the-user">
+<h2>What is Significant to the User?<a class="headerlink" href="#what-is-significant-to-the-user" title="Permalink to this headline">¶</a></h2>
+<p>Files that the user will be most interested in will be found in the first
+layer of their run directory. These will include fasta files of candidate
+peptides of interest, csv type file to piece together where everything came
+from and a log file to help out with that and for debugging.</p>
+<p>All files that are stored at deeper level is stuff Corn on Cob is using to do the actual
+analysis and would include output from Prokka, other software used and temp
+files. We are planning on leaving these intact for the final version for easier
+debugging and in case the user wants to review and of the intermediate files.</p>
+</div>
 </div>
 
 
