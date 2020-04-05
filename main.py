@@ -1,7 +1,6 @@
-from args_reader import get_args
-from phenotype import Phenotype
-
-from io_utils import if_not_exists_make
+from cornoncob.args_reader import get_args
+from cornoncob.phenotype import Phenotype
+from cornoncob.io_utils import if_not_exists_make
 
 
 PROKKA = '/home/ethan/prokka/bin/./prokka'
@@ -14,7 +13,10 @@ def main():
                   for pheno_dir in (args.p1, args.p2)]
     
     for p in phenotypes:
-        p.pull_peptides(PROKKA)
+        p.pull_peptides(args.k)
+        p.get_conserved_sequences()
+    
+    phenotypes[0].compare_phenotype(phenotypes[1])
     # phenotype objects are created and directory strucutre is set up
 
 
