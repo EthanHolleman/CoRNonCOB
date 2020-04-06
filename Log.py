@@ -14,8 +14,10 @@ class Log():
     def close_log(self):
         self.logfile.close()
 
-    def get_phenotype_parameters(phenotype):
-        self.write_string('Phenotype: ' + phenotype.phenotype)
-        self.write_string('Genome Directory: ' + phenotype.genome_dir)
-        self.write_string('Output Directory: ' + phenotype.output_dir)
-        self.write_string('Genomes: ' + phenotype.genomes)
+    def get_phenotype_parameters(self,phenotype):
+        '''
+        Takes phenotype object, and writes its parameters to a log file
+        '''
+        self.write_string('Phenotype: {}\tNum Genomes: {}\tOutput_dir: {}'.format(phenotype.phenotype,
+len(phenotype.genomes),phenotype.output_dir))
+
