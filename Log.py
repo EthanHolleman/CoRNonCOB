@@ -18,6 +18,6 @@ class Log():
         '''
         Takes phenotype object, and writes its parameters to a log file
         '''
-        self.write_string('Phenotype: {}\tNum Genomes: {}\tOutput_dir: {}'.format(phenotype.phenotype,
+        self.write_string('Phenotype: {}\tNum Genomes: {}\tOutput_dir: {}\n'.format(phenotype.phenotype,
 len(phenotype.genomes),phenotype.output_dir))
 
