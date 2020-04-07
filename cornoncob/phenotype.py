@@ -3,8 +3,8 @@ import subprocess
 import sys
 
 from cornoncob.genome import Genome
-from cornoncob.io_utils import if_not_exists_make, parse_cdhit_output_file, convert_genome_to_header_dict
-
+from cornoncob.io_utils import (convert_genome_to_header_dict,
+                                if_not_exists_make, parse_cdhit_output_file)
 
 # TODO
 # phenotype objects should create their own directory within the given
@@ -162,12 +162,6 @@ class Phenotype():
                 csf.write(f'>{header}\n{seq}\n')
 
         self.conserved_seqs = conserved_seq_fasta
-    
-    def compare_phenotype(self, other_phenotype, s='0.90'):
-        cd_hit_cmd = [
-            'cdhit-2d', '-i', self.conserved_seqs, '-i2', other_phenotype.conserved_seqs, '-o',
-            '../compare_phenos','-d', '0','-p', '1', '-s', s
-        ]
-        subprocess.call(cd_hit_cmd)
-        
-        return '../compare_phenos.clstr'
+
+    def assign_headers_to_seqs(self, header_list):
+        return [(header, self.peptide_dict[header]) for header in header_list if header in self.peptide_dict]

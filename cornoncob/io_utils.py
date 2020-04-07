@@ -152,6 +152,38 @@ def parse_cdhit_record(record, genome_id=True):
     else:
         return tuple(pretag)
 
+'''
+def filter_parsed_cdhit_for_unique_peptides(parsed_cdhit_output, pheno_a_ids, pheno_b_ids):
+    for cluster in parsed_cdhit_output:
+            participating_genomes, rep_seq = set([]), None
+            for record in cluster:
+                if record[-2] == '*':
+                    rep_seq = record
+                participating_genomes.add(record[-1])  # add genome id
+                
+            if len(participating_genomes) == 1:
+                unique
+
+
+def filter_parsed_cdhit_output(parsed_cdhit_output, participation_thres=0.85, num_members=2, conserved=True):
+    for cluster in parsed_cdhit_output:
+            participating_genomes, rep_seq = set([]), None
+            for record in cluster:
+                if record[-2] == '*':
+                    rep_seq = record
+                participating_genomes.add(record[-1])  # add genome id
+                
+            if conserved:
+                if 
+
+            if len(participating_genomes) / num_members >= participation_thres and conserved:
+                # percentage of genomes that participate in this cluster
+                # is greater than or equal to con threshold
+                    conserved_records.append((rep_seq, len(cluster)))
+'''              
+
+
+
 
 def parse_cdhit_output_file(clstr_file):
     '''

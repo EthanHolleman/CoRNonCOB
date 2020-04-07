@@ -57,4 +57,4 @@ class NoncodingSeq():
         return self.frames[index]
 
     def __repr__(self):
-        return '{}\n{}\n{}'.format(self.seq, self.start, self.seq_type)
+        return f'{self.description}'

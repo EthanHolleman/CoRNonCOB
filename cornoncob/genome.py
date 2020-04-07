@@ -2,7 +2,7 @@ import subprocess
 import os
 
 
-from cornoncob.io_utils import convert_genome_to_list, if_not_exists_make, parse_gff, convert_genome_to_header_dict, filter_prokka_files
+from cornoncob.io_utils import *
 from cornoncob.sequence import NoncodingSeq
 
 
@@ -27,13 +27,13 @@ class Genome():
 
         self.genome_file = genome_file
         self.genome_id = str(hash(genome_file))[:5]
-        self.genome_dict = convert_genome_to_header_dict(self.genome_file)
         self.phenotype = phenotype
         self.gene_prediction_file = gene_prediction_file
         self.non_coding_file = non_coding_file
         self.non_coding_seqs = []
         self.output_dir = if_not_exists_make(
             pheno_dir, os.path.basename(genome_file))
+        self.genome_dict = None
         # potentially change to dictionary to allow non coding seq
         # look up by start location if that is needed later
 
@@ -67,6 +67,7 @@ class Genome():
         prokka_dir = if_not_exists_make(self.output_dir, results_dir_name)
 
         input_file = self.genome_file
+        
 
         cmd = [path_to_exec, '--outdir', prokka_dir,
                '--cpus', str(threads), '--force', '--fast', input_file]
@@ -85,6 +86,7 @@ class Genome():
         file and store the path to that file in the non_coding_file
         attribute.
         '''
+        self.genome_dict = convert_genome_to_header_dict(self.genome_file)
         coding_regions = parse_gff(self.gene_prediction_file, 0, 3, 4)
         # read the gff file for predicted coding regions
 
@@ -110,11 +112,13 @@ class Genome():
         for header, coding_regions_list in coding_regions_dict.items():
             # iterate through all pairs of headers and coding regions
             # get the sequence for the current header
+            
             working_seq = self.genome_dict[header]
             cur_non_coding_string = ''
             i, j = 0, 0
             start, stop = coding_regions_list[j]
             while True:
+                
                 if i < start:  # at position before gene
                     cur_non_coding_string += working_seq[i]
                     i += 1
