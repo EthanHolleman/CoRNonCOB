@@ -124,7 +124,7 @@ class Phenotype():
         conserved_seq_fasta = os.path.join(
             self.output_dir, f'{self.phenotype}_conserved_peptides.fasta')
 
-        genome_peptides = [genome.non_coding_file for genome in self.genomes]
+        genome_peptides = [f'"{genome.non_coding_file}"' for genome in self.genomes]
         # get all of the peptide file paths in one list
 
         cat_cmd = ['cat'] + genome_peptides + ['>', phenotype_peptides]
@@ -133,6 +133,7 @@ class Phenotype():
                       '-p', '1', '-s', s]
 
         # concat all individual peptide files
+        print(' '.join(cat_cmd))
         cat_call = subprocess.call(' '.join(cat_cmd), shell=True)
         cdhit_call = subprocess.call(cd_hit_cmd)  # run cd-hit on cated file
 
