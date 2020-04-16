@@ -5,6 +5,7 @@ import csv
 import sys
 import subprocess
 
+from cornoncob import TEST_PEPS
 sys.path.append(".")
 
 
@@ -12,36 +13,89 @@ def read_test_peps(TEST_PEPS):
     '''
     Reads in peptides and their consensus nucleotide translation
     into tuples and returns those tuples in a list. This is the ground truth
-    list.
+    list. Peptides with type P are positive and only inserted into the
+    positive phenotype. Peptides with type C are control or negative and insert
+    -ed into both genomes. We expect to see positive peptides in the final
+    output but do not expect to see control / negative peptides.
+
+    Returns a tuple of two lists, first is the positive peptides second is the
+    control peptides.
     '''
+    positive, control = [], []
     with open(TEST_PEPS) as tp:
         reader = csv.reader(tp)
-        next(reader)
-        return [row for row in reader]
+        for row in reader:
+            if row[-2] == 'C':
+                positive.append(row)
+                control.append(row)
+            else:
+                positive.append(row)
+    return positive, control
 
 
-def run_baseline_prokka(phenotype, run_dir):
+def insert_test_peptides_into_all_phenotypes(postive_pheno, negative_pheno):
+    pos_test_peps, neg_test_peps = read_test_peps(TEST_PEPS)
+
+    positive_test_data = insert_test_peptides_into_phenotype(
+        postive_pheno, pos_test_peps)
+    negative_test_data = insert_test_peptides_into_phenotype(
+        negative_pheno, neg_test_peps)
+
+
+def insert_test_peptides_into_phenotype(phenotype, test_peptide_list, stop=True,
+                                        seed=100, prokka_exec='prokka'):
     '''
-    Runs prokka on all the genomes present in the given phenotype and then
-    copies or stores in memory the results of each prokka prediction gff file
-    in order to establish where the non-coding regions of the genomes will be
-    predicted to be. This way test peptide coding nuceltide sequences can be
-    safley inserted into each genome.
+    Inserts the given test_peptides from the test_peptide_list into the
+    given phenotype at random contigs. Returns a dictionary of contig headers
+    and locations of peptide insertions.
     '''
-    test_files = if_not_exists_make(run_dir, 'test_files')
-    for genome in phenotype:  # run prokka on all genomes in the phenotype
-        genome.make_gene_predictions()
+    np.random.seed(seed)
+    test_data = {}
+    num_test_peps = len(test_peptide_list)
 
-    # copy genome files into the test files folder to conserve them
-    # after the run is complete maybe dont need to do this.
+    for i, genome in enumerate(phenotype.genomes):
+        genome_copy = f'{genome.genome_file}.copy'
+        if '.copy' in genome.genome_file:
+            continue  # copy of a genome do not add peptides
+        else:
+            genome.make_gene_predictions(path_to_exec=prokka_exec)
+            genome_records_dict = SeqIO.to_dict(
+                SeqIO.parse(genome.genome_file, 'fasta')
+            )  # turn genome file into dictionary by header
+            gene_records = parse_gff(genome.gene_prediction_file, 0, 3, 4)
+            # pull out gene predictions
+            random_indicies = np.random.choice(
+                len(gene_records), num_test_peps, replace=False
+            )  # pick random gene headers to insert into
+            random_gene_headers = [gene_records[i] for i in random_indicies]
+            # store the headers coresponding to random indicies
 
-    # run prokka on each insert into the genomes with those files and
-    # then just let them get overwritten. probably want to store some
-    # info on what was inserted where so can check that out later on
+            for j, random_gene in enumerate(random_gene_headers):
+                gene_header, start, end = random_gene[0], int(
+                    random_gene[1]), int(random_gene[2])
+                peptide = test_peptide_list[j]
+                buffer = np.random.randint(25, 30)
+                # num nucleotides between coding and inserted peptide start
+                current_seq = genome_records_dict[gene_header].seq
+                genome_records_dict[gene_header].seq = current_seq[:end] + \
+                    current_seq[end:end+buffer] + \
+                    peptide[2] + current_seq[end+buffer:]
+                test_data[gene_header] = int(end+buffer)  # add location
+
+        records = [seq_rec for key, seq_rec in genome_records_dict.items()]
+        SeqIO.write(records, genome_copy, 'fasta')
+        phenotype.genomes[i].genome_file = genome_copy
+        phenotype.genome_dict = convert_genome_to_header_dict(genome_copy)
+        # overwrite the existing genome file with the modified and unmodified
+
+        return test_data
 
 
-def insert_test_peps(positive_pheno, test_peps, add_stop_codon=False, seed=100, prokka_exec='prokka'):
+def insert_test_peps_depr(positive_pheno, negative_pheno, test_peps,
+                     stop=True, seed=100, prokka_exec='prokka'):
     '''
+    DEPRECIATED
+    
     Given a phenotype which is considered the positive for a given character
     inserts the nucleotide sequences of the peptides in TEST_PEPS file into the
     non-coding regions of the genome as defined by the gene predicitions made by
@@ -51,17 +105,13 @@ def insert_test_peps(positive_pheno, test_peps, add_stop_codon=False, seed=100, 
     :param test_peps: List. List of lists of test_peps.csv file
     :param add_stop_codon: Boolean. If True inserts stop codon at start of test peptides
     '''
-    test_peps = read_test_peps(test_peps)
+    postive_peps, negative_peps = read_test_peps(test_peps)
     np.random.seed(100)
     test_data = {}
-    
-
     num_test_peps = len(test_peps)
     for i, genome in enumerate(positive_pheno.genomes):
         genome_copy = f'{genome.genome_file}.copy'
-        
         genome.make_gene_predictions(path_to_exec=prokka_exec)
-        
         genome_records_dict = SeqIO.to_dict(
             SeqIO.parse(genome.genome_file, 'fasta'))
         gene_records = parse_gff(genome.gene_prediction_file, 0, 3, 4)
@@ -72,12 +122,14 @@ def insert_test_peps(positive_pheno, test_peps, add_stop_codon=False, seed=100, 
         # pick random records predicted to be coding. Index 0 is header name
         # in the genome fasta 1 = start of coding, 2 = end coding
         for j, random_gene in enumerate(random_gene_headers):
-            gene_header, start, end = random_gene[0], int(random_gene[1]), int(random_gene[2])
+            gene_header, start, end = random_gene[0], int(
+                random_gene[1]), int(random_gene[2])
             peptide = test_peps[j]
             # start and end refer to start end of coding region in the record
             # buffer is distance between test pep and coding region
             # where = random.randint(0, 1) adding start later
-            buffer = np.random.randint(25, 30)  # probably want to make relative
+            # probably want to make relative
+            buffer = np.random.randint(25, 30)
             in_seq = genome_records_dict[gene_header].seq
             genome_records_dict[gene_header].seq = in_seq[:end] + \
                 in_seq[end:end+buffer] + peptide[2] + in_seq[end+buffer:]
@@ -93,8 +145,24 @@ def insert_test_peps(positive_pheno, test_peps, add_stop_codon=False, seed=100, 
         positive_pheno.genome_dict = convert_genome_to_header_dict(genome_copy)
         # assign genome to the copyied file with the inserted seqs
     return test_data
-    
+
+
+def score_preformance(postive_test_data, negative_test_data, final_output_path):
+    '''
+    Reads the final fasta outputs using the test data and test peptide info
+    to determine how well the program preformed.
+    '''
+    pass
+
+
+
+
 def check_gff_file(gff_file, test_data):
+    '''
+    Checks to make sure that no coding regions overlap with peptide insertions.
+    If any overlap is found removes that coding region from the gff file and
+    rewrites.
+    '''
     good_rows = []
     with open(gff_file) as gff:
         reader = csv.reader(gff, delimiter='\t')
@@ -106,13 +174,8 @@ def check_gff_file(gff_file, test_data):
                     continue
                 else:
                     good_rows.append(row)
-    
+
     with open(gff_file, 'w') as gff_write:
         writer = csv.writer(gff_write, delimiter='\t')
         for row in good_rows:
             writer.writerow(row)
-            
-            
-                    
-                    
-                
