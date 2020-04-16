@@ -35,7 +35,7 @@ len(phenotype.genomes),phenotype.output_dir))
         and writes number of nc regions to file.
         
         '''
-        self.write_string('\nGenome: {}\tPhenotype: {}\tNumber of non-coding sequences: {}\t'.format(genome.genome_id,
+        self.write_string('\nGenome: {}\tPhenotype: {}\tNumber of non-coding sequences: {}\n'.format(genome.genome_id,
                                                                                                      genome.phenotype, len(genome.non_coding_sequences)))
         
 
