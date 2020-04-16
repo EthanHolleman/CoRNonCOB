@@ -1,4 +1,5 @@
-from cornoncob.phenotype import Phenotype 
+from cornoncob.phenotype import Phenotype
+from cornoncob.genome import Genome 
 
 class Log():
     '''
@@ -15,9 +16,26 @@ class Log():
         self.logfile.close()
 
     def get_phenotype_parameters(self,phenotype):
+        
         '''
-        Takes phenotype object, and writes its parameters to a log file
+
+        Method that takes phenotype object,
+        and writes its parameters to a log file
+        
         '''
+        
         self.write_string('Phenotype: {}\tNum Genomes: {}\tOutput_dir: {}\n'.format(phenotype.phenotype,
 len(phenotype.genomes),phenotype.output_dir))
+
+    def get_genotype_parameters(self, genome):
+        
+        '''
+
+        Method that takes in genome object,
+        and writes number of nc regions to file.
+        
+        '''
+        self.write_string('\nGenome: {}\tPhenotype: {}\tNumber of non-coding sequences: {}\t'.format(genome.genome_id,
+                                                                                                     genome.phenotype, len(genome.non_coding_sequences)))
+        
 
