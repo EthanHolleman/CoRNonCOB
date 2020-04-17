@@ -1,5 +1,6 @@
 from cornoncob.io_utils import parse_gff, if_not_exists_make, convert_genome_to_header_dict
 from Bio import SeqIO
+from Bio.Seq import Seq
 import numpy as np
 import csv
 import sys
@@ -24,6 +25,7 @@ def read_test_peps(TEST_PEPS):
     positive, control = [], []
     with open(TEST_PEPS) as tp:
         reader = csv.reader(tp)
+        next(reader)  # skip header
         for row in reader:
             if row[-2] == 'C':
                 positive.append(row)
@@ -33,13 +35,17 @@ def read_test_peps(TEST_PEPS):
     return positive, control
 
 
-def insert_test_peptides_into_all_phenotypes(postive_pheno, negative_pheno):
+def insert_test_peptides_into_all_phenotypes(postive_pheno, negative_pheno,
+                                             seed=100, prokka_exec='prokka',
+                                             stop=True):
     pos_test_peps, neg_test_peps = read_test_peps(TEST_PEPS)
 
     positive_test_data = insert_test_peptides_into_phenotype(
-        postive_pheno, pos_test_peps)
+        postive_pheno, pos_test_peps, stop, seed, prokka_exec)
     negative_test_data = insert_test_peptides_into_phenotype(
-        negative_pheno, neg_test_peps)
+        negative_pheno, neg_test_peps, stop, seed, prokka_exec)
+    
+    return positive_test_data, negative_test_data
 
 
 def insert_test_peptides_into_phenotype(phenotype, test_peptide_list, stop=True,
@@ -77,18 +83,23 @@ def insert_test_peptides_into_phenotype(phenotype, test_peptide_list, stop=True,
                 buffer = np.random.randint(25, 30)
                 # num nucleotides between coding and inserted peptide start
                 current_seq = genome_records_dict[gene_header].seq
-                genome_records_dict[gene_header].seq = current_seq[:end] + \
+                if stop:
+                    peptide[2] = 'TAA' + peptide[2] + 'TAA'       
+                seq_with_test_pep = current_seq[:end] + \
                     current_seq[end:end+buffer] + \
                     peptide[2] + current_seq[end+buffer:]
+
+                genome_records_dict[gene_header].seq = seq_with_test_pep
+                    
                 test_data[gene_header] = int(end+buffer)  # add location
 
         records = [seq_rec for key, seq_rec in genome_records_dict.items()]
         SeqIO.write(records, genome_copy, 'fasta')
         phenotype.genomes[i].genome_file = genome_copy
-        phenotype.genome_dict = convert_genome_to_header_dict(genome_copy)
+        phenotype.genomes[i].genome_dict = convert_genome_to_header_dict(genome_copy)
         # overwrite the existing genome file with the modified and unmodified
 
-        return test_data
+    return test_data
 
 
 def insert_test_peps_depr(positive_pheno, negative_pheno, test_peps,
@@ -147,12 +158,30 @@ def insert_test_peps_depr(positive_pheno, negative_pheno, test_peps,
     return test_data
 
 
-def score_preformance(postive_test_data, negative_test_data, final_output_path):
+def score_preformance(final_output_path):
     '''
     Reads the final fasta outputs using the test data and test peptide info
-    to determine how well the program preformed.
+    to determine how well the program preformed. DID NOT WORK LOL
     '''
-    pass
+    scores = [0, 0]  # positive found, negative found
+    positive_peps, negative_peps = read_test_peps(TEST_PEPS)
+    pos_test_set, neg_test_set = convert_to_test_set(positive_peps), convert_to_test_set(negative_peps)
+    final_records = SeqIO.parse(final_output_path, 'fasta')
+    
+    for record in final_records:
+        str_seq = str(record.seq)
+        if str_seq in pos_test_set:
+            scores[0] += 1
+        elif str_seq in neg_test_set:
+            scores[1] += 1
+    
+    return scores[0] / len(positive_peps), scores[1] / len(negative_peps)
+            
+
+
+def convert_to_test_set(peptide_list, aa_index=1):
+    return set(row[aa_index].strip() for row in peptide_list)
+    
 
 
 
