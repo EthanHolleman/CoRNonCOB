@@ -11,6 +11,9 @@ class Log():
         
     def write_string(self, string):
         self.logfile.write('{}\n'.format(string))
+        if args.test:
+        # test I use to see if program is in testing mode
+            self.logfile.write('Progam is in testing mode')
         
     def close_log(self):
         self.logfile.close()
