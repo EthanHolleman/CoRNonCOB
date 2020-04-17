@@ -44,8 +44,8 @@ def main():
         for pep in unique_seqs:
             upp.write(f'>{pep[0]}\n{pep[1]}\n')
     
-    if args.test:
-        print(score_preformance(unique_seqs))
+    if args.test:  # TODO: write to log file
+        print(score_preformance(unique_peps_path))
     
 
     # then if this is a test check to see if we can find the
