@@ -168,72 +168,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-genome">
-<span id="genome-module"></span><h1>genome module<a class="headerlink" href="#module-genome" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="genome.Genome">
-<em class="property">class </em><code class="sig-prename descclassname">genome.</code><code class="sig-name descname">Genome</code><span class="sig-paren">(</span><em class="sig-param">genome_file</em>, <em class="sig-param">phenotype</em>, <em class="sig-param">pheno_dir</em>, <em class="sig-param">gene_prediction_file=None</em>, <em class="sig-param">non_coding_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Representation of an individual bacterial genome. Stores its NoncodingSeq files
-and has methods for predicting coding regions and then retreiving
-non-coding regions</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>genome_file</strong> – string, filepath to fasta formated file of         the complete bacterial genome</p></li>
-<li><p><strong>phenotype</strong> – string, string that acts as a key for identifying         the bacterial phenotype</p></li>
-<li><p><strong>gene_prediction_file</strong> – string, filepath to gff generated via prokka.        Default = None</p></li>
-<li><p><strong>non_coding_file</strong> – string, filepath to fasta of non-coding regions.        Default = None</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="method">
-<dt id="genome.Genome.get_non_coding_regions">
-<code class="sig-name descname">get_non_coding_regions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome.get_non_coding_regions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Using the genome file associated with an instance of a specific genome
-object and the gene prediction gff file to extract the non-coding
-regions in the genome. Will write the non-coding strings as a fasta
-file and store the path to that file in the non_coding_file
-attribute.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="genome.Genome.make_gene_predictions">
-<code class="sig-name descname">make_gene_predictions</code><span class="sig-paren">(</span><em class="sig-param">threads=2</em>, <em class="sig-param">path_to_exec='prokka'</em>, <em class="sig-param">results_dir_name='prokka_results'</em><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome.make_gene_predictions" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function will run prokka to find predicted gene locations for
-the instance of Genome it is called on.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="genome.Genome.translate_non_coding_seqs">
-<code class="sig-name descname">translate_non_coding_seqs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome.translate_non_coding_seqs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iterates through the non coding NoncodingSeqs stored in non_coding_seqs
-and calls translation_siz_shooter to translate the nucleotide
-NoncodingSeq into all six reading frames.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="genome.Genome.write_peptides_to_fasta_file">
-<code class="sig-name descname">write_peptides_to_fasta_file</code><span class="sig-paren">(</span><em class="sig-param">output_dir=None</em>, <em class="sig-param">stop_codon_symbol='*'</em>, <em class="sig-param">min_len=6</em><span class="sig-paren">)</span><a class="headerlink" href="#genome.Genome.write_peptides_to_fasta_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>DRAFT</p>
-<p>After the noncoding peptides have been translated this function is
-called to write those peptides to a file so a motif finding or
-clustering program can find conserved and or differential NoncodingSeqs.
-Currently the headers for each peptide are pretty minimal and will be
-reworked to include more info soon.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>output_dir</strong> – String. Path to directory where fasta file will be written</p></li>
-<li><p><strong>stop_codon_symbol</strong> – Char. Symbol used for stop codon in translated seqs. Default = ‘*’</p></li>
-<li><p><strong>min_len</strong> – Int. Minimum length required for peptide to be written.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="genome-module">
+<h1>genome module<a class="headerlink" href="#genome-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 

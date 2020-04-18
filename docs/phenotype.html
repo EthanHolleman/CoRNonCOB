@@ -168,71 +168,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-phenotype">
-<span id="phenotype-module"></span><h1>phenotype module<a class="headerlink" href="#module-phenotype" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="phenotype.Phenotype">
-<em class="property">class </em><code class="sig-prename descclassname">phenotype.</code><code class="sig-name descname">Phenotype</code><span class="sig-paren">(</span><em class="sig-param">genome_dir</em>, <em class="sig-param">run_dir</em>, <em class="sig-param">phenotype=None</em><span class="sig-paren">)</span><a class="headerlink" href="#phenotype.Phenotype" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Designed to represent a specific
-bacterial phenotype that may contain many individual genomes of that
-phenotype. Phenotype objects are currently the outermost layer of the
-program.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>genome_dir</strong> – String. Path to directory containing all         genomes that are to be contained in the phenotype instance.</p></li>
-<li><p><strong>run_dir</strong> – String. Path to outermost directory and is supplied         by the user. Creating an instance of phenotype will create a new         directory within the run_dir.</p></li>
-<li><p><strong>phenotype</strong> – String. Description of the phenotype. If none is         provided assumes that the basename of the genome_dir is the         phenotype name.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="method">
-<dt id="phenotype.Phenotype.add_genomes_from_dir">
-<code class="sig-name descname">add_genomes_from_dir</code><span class="sig-paren">(</span><em class="sig-param">genome_dir</em>, <em class="sig-param">pheno=None</em><span class="sig-paren">)</span><a class="headerlink" href="#phenotype.Phenotype.add_genomes_from_dir" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a directory containing genome files of one phenotype and adds those
-files as genome objects to this phenotype instance’s genomes list.</p>
-<p>param: genome_dir: String; path to the genome directory
-param: pheno: String; If not None, use this string as the phenotype</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="phenotype.Phenotype.get_conserved_sequences">
-<code class="sig-name descname">get_conserved_sequences</code><span class="sig-paren">(</span><em class="sig-param">cdhit_exec='cdhit'</em>, <em class="sig-param">s='0.90'</em>, <em class="sig-param">con=0.75</em><span class="sig-paren">)</span><a class="headerlink" href="#phenotype.Phenotype.get_conserved_sequences" title="Permalink to this definition">¶</a></dt>
-<dd><p>WIP</p>
-<p>TODO: Test chhit call is working as expected and add parseing of clstr
-file. Then need to find conserved seqs within the file and seperate
-those out into a new file for comparison with the other phenotype.</p>
-<p>Using some metrics and methods pulls out the conserved non-coding
-sequences from a collection of genomes stored in this phenotype
-instance.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cdhit_exec</strong> – String. Path to cdhit executable default = cdhit</p></li>
-<li><p><strong>s</strong> – String. Num 0-1 sets min length difference between rep seq         and subject seqs</p></li>
-<li><p><strong>con</strong> – Int. Percentage of genomes that must have a peptide in a         cluster for that cluster to be considered conserved.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="phenotype.Phenotype.pull_peptides">
-<code class="sig-name descname">pull_peptides</code><span class="sig-paren">(</span><em class="sig-param">prokka_exec='prokka'</em><span class="sig-paren">)</span><a class="headerlink" href="#phenotype.Phenotype.pull_peptides" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wrapper around methods in the Genome class. This methos iterates
-through all genomes in a phenotype and uses prokka to make gene
-predictions, identifies non-coding regions and then translates
-those regions into six reading frames.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="phenotype.Phenotype.set_phenotype">
-<code class="sig-name descname">set_phenotype</code><span class="sig-paren">(</span><em class="sig-param">phenotype</em><span class="sig-paren">)</span><a class="headerlink" href="#phenotype.Phenotype.set_phenotype" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="phenotype-module">
+<h1>phenotype module<a class="headerlink" href="#phenotype-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
