@@ -168,45 +168,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-sequence">
-<span id="sequence-module"></span><h1>sequence module<a class="headerlink" href="#module-sequence" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="sequence.NoncodingSeq">
-<em class="property">class </em><code class="sig-prename descclassname">sequence.</code><code class="sig-name descname">NoncodingSeq</code><span class="sig-paren">(</span><em class="sig-param">description</em>, <em class="sig-param">seq</em>, <em class="sig-param">start</em><span class="sig-paren">)</span><a class="headerlink" href="#sequence.NoncodingSeq" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Represents individual nucleotide noncoding seequence within a larger genome.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>seq</strong> – String, the actual nucleotide sequence. Converted to Biopython Seq object when passed in</p></li>
-<li><p><strong>description</strong> – String. Header of the fasta entry for the original sequence</p></li>
-<li><p><strong>start</strong> – int, start position of the sequence in its genome</p></li>
-<li><p><strong>seq_type</strong> – string, some identifier for the sequence type i.e ‘noncoding’</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="method">
-<dt id="sequence.NoncodingSeq.translation_six_shooter">
-<code class="sig-name descname">translation_six_shooter</code><span class="sig-paren">(</span><em class="sig-param">to_stop=False</em>, <em class="sig-param">stop_codon_symbol='*'</em><span class="sig-paren">)</span><a class="headerlink" href="#sequence.NoncodingSeq.translation_six_shooter" title="Permalink to this definition">¶</a></dt>
-<dd><p>For an instance of a Sequence object translates the sequence stored in
-self.seq into six reading frames. Those sequences are stored in
-self.frames list as Biopython seq objects. Within self.frames the order
-of the reading frames will always be</p>
-<p>forward(0, 1, 2) reverse complement(0, 1, 2)</p>
-<p>So accessing an instance of seq at [2] would return the forward reading
-frame offset by 1 nucleotide.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>to_stop</strong> – Boolean, whether or not to stop translation at first stop codon</p></li>
-<li><p><strong>stop_codon_symbol</strong> – String to insert at a stop codon</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="sequence-module">
+<h1>sequence module<a class="headerlink" href="#sequence-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 

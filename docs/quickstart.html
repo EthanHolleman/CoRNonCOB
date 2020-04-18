@@ -88,9 +88,10 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#install-ncbi-blast">Install ncbi-blast+</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-prokka-with-sudo-privlages">Install Prokka with Sudo Privlages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-prokka-without-sudo-privlages">Install Prokka without Sudo Privlages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#get-data">Get Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-prokka">Install Prokka</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-required-python-packages">Install Required Python Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-run">Example Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-in-test-mode">Running in Test Mode</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Project Overview</a></li>
@@ -176,10 +177,8 @@ you are having problems doing this, here is a <a class="reference external" href
 (Sorry windows people). Test by typing <code class="code docutils literal notranslate"><span class="pre">makeblastdb</span> <span class="pre">--help</span></code> in your terminal.
 You should get the help menu.</p>
 </div>
-<div class="section" id="install-prokka-with-sudo-privlages">
-<h2>Install Prokka with Sudo Privlages<a class="headerlink" href="#install-prokka-with-sudo-privlages" title="Permalink to this headline">¶</a></h2>
-<p>Note: I installed Prokka for Ubuntu but it looks like the steps for Mac are
-prety similar. Hopefully this is helpful.</p>
+<div class="section" id="install-prokka">
+<h2>Install Prokka<a class="headerlink" href="#install-prokka" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://github.com/tseemann/prokka">Visit the GitHub and follow their install directions</a></p></li>
 </ol>
@@ -190,10 +189,6 @@ prety similar. Hopefully this is helpful.</p>
 <ol class="arabic simple" start="2">
 <li><p>Test to make sure Prokka is responsive. My commands to do so look like below.</p></li>
 </ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Your file paths may look different than mine.</p>
-</div>
 <div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">cd</span>
@@ -202,8 +197,7 @@ prety similar. Hopefully this is helpful.</p>
 </pre></div>
 </td></tr></table></div>
 <p>This should print the help menu if everything is working.</p>
-<p>Calling tree from the prokka folder in my home directory this is the directory
-structure I got.</p>
+<p>Calling tree from the prokka folder should produce a structure like this one.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.
 ├── bin
 ├── binaries
@@ -225,13 +219,59 @@ structure I got.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="install-prokka-without-sudo-privlages">
-<h2>Install Prokka without Sudo Privlages<a class="headerlink" href="#install-prokka-without-sudo-privlages" title="Permalink to this headline">¶</a></h2>
-<p>Still working on that one. I tried cloning it onto the comp bio server
-and running but got some errors about compilation.</p>
+<div class="section" id="install-required-python-packages">
+<h2>Install Required Python Packages<a class="headerlink" href="#install-required-python-packages" title="Permalink to this headline">¶</a></h2>
+<p>CoRNonCOB requires numpy and Biopython to function. You can install these
+packages using pip if you don’t have them already.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install Biopython numpy
+</pre></div>
 </div>
-<div class="section" id="get-data">
-<h2>Get Data<a class="headerlink" href="#get-data" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="example-run">
+<h2>Example Run<a class="headerlink" href="#example-run" title="Permalink to this headline">¶</a></h2>
+<p>A normal CoRNonCOB run will likely look something like the command below (assuming
+you are currently in the CoRNonCOB directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python main.py -p1 <span class="o">[</span>path/to/positive/phenotype<span class="o">]</span> -p2 <span class="o">[</span>path/to/control/phenotype<span class="o">]</span> -o <span class="o">[</span>output/path<span class="o">]</span> -n <span class="o">[</span>run name<span class="o">]</span>
+</pre></div>
+</div>
+<p>The most important thing to note here are the arguements -p1 and -p2 which
+should be file paths to directories you would like to assign to each phenotype
+in your CoRNonCOB run. The -p1 directory will always be considered the
+positive phenotype and -p2 will always be the control or wild type.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The -p1 and -p2 directories should only contain fasta files of the genomes you wish to assign to each respective phenotype</p>
+</div>
+<p>Below is a complete description of all arguements, you can also display this
+menu by running <code class="code docutils literal notranslate"><span class="pre">flag.python</span> <span class="pre">main.py</span> <span class="pre">--help</span></code>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>-h, --help  show this help message and exit
+-p1 P1      Path to directory containing all genomes of the positive
+            phenotype
+-p2 P2      Path to directory containing all genome of the control (wild-
+            type) phenotype
+-o O        Path to output directory
+-t T        Number of threads to use while running Prokka
+-n N        Run name
+-k K        Path to prakka executable if not in PATH variable
+-test TEST  If True, runs program in test mode
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-in-test-mode">
+<h2>Running in Test Mode<a class="headerlink" href="#running-in-test-mode" title="Permalink to this headline">¶</a></h2>
+<p>CoRNonCOB can also be run in a testing mode to evaluate its preformance either
+using the included test data or with your own data.</p>
+<p>To run CoRNonCOB in test mode with the provided test data just use the command
+below from the CoRNonCOB directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python main.py -test True
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have not set a PATH variable for prokka you will still need to use the -k arguement</p>
+</div>
+<p>To use your own data run CoRNonCOB with your normal command but add the
+<code class="code docutils literal notranslate"><span class="pre">-test</span> <span class="pre">True</span></code> flag.</p>
 </div>
 </div>
 
