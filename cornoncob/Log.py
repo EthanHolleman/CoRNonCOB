@@ -1,5 +1,6 @@
 from cornoncob.phenotype import Phenotype
-from cornoncob.genome import Genome 
+from cornoncob.genome import Genome
+import time 
 
 class Log():
     '''
@@ -8,6 +9,7 @@ class Log():
     '''
     def __init__(self, logfile):
         self.logfile = open(logfile, 'w')
+        self.start_time = time.time()
         
     def write_string(self, string):
         self.logfile.write('{}\n'.format(string))
@@ -40,5 +42,46 @@ len(phenotype.genomes),phenotype.output_dir))
         '''
         self.write_string('\nGenome: {}\tPhenotype: {}\tNumber of non-coding sequences: {}\n'.format(genome.genome_id,
                                                                                                      genome.phenotype, len(genome.non_coding_sequences)))
-        
+    def get_number_conserved_peptides(self,phenotype):
 
+        '''
+
+        Method that takes phenotype object,
+        and writes number of conserved peptides
+        
+        '''
+        cp = 0
+        f = open(phenotype.conserved_seqs, 'r')
+        for line in f:
+            if line[0] == '>':
+                cp = cp + 1
+
+        
+        self.write('\nThere are {} conserved peptides in phenotype {}'.format(cp, phenotype.phenotype))
+
+    def get_number_unique_peptides(self, genotype):
+
+        '''
+
+        Method that takes genotype object,
+        and writes number of unique peptides
+        
+        '''
+        up = 0
+        f2 = open(genotype.non_coding_file, 'r')
+        for line in f2:
+            if line[0] == '>':
+                up = up + 1
+
+        self.write('\nThere are {} unique peptides in genome {}, which is in phenotype {}'.format(up, genome.genome_id, genotype.phenotype))
+
+    def calculate_execution_time(self):
+        '''
+
+        Method that records execution time of program
+         
+        '''
+
+        elapsed_time = time.time()- self.start_time
+
+        self.write('Execution time: %s seconds' % timedelta(seconds=round(elapsed_time)))
