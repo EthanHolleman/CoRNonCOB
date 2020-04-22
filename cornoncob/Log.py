@@ -26,7 +26,7 @@ class Log():
         
         '''
         
-        self.write_string('Phenotype: {}\tNum Genomes: {}\tOutput_dir: {}'.format(phenotype.phenotype,
+        self.write_string('Phenotype: {}\tNum Genomes: {}\tOutput_dir: {}\n'.format(phenotype.phenotype,
 len(phenotype.genomes),phenotype.output_dir))
 
     def get_genotype_parameters(self, genome):
