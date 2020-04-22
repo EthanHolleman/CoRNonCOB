@@ -152,6 +152,23 @@ def parse_cdhit_record(record, genome_id=True):
     else:
         return tuple(pretag)
 
+
+def write_unique_seqs(run_dir, unique_seqs, file_name='unique_peps.fasta'):
+    '''
+    Write peptides from unique_seqs list to fasta output.
+    '''
+    headers = set({})
+    unique_peps_path = os.path.join(run_dir, file_name)
+    with open(unique_peps_path, 'w') as upp:
+        for pep in unique_seqs:
+            if pep[0] not in headers:
+                upp.write(f'>{pep[0]}\n{pep[1]}\n')
+                headers.add(pep[0])
+    return unique_peps_path
+
+
+
+
 '''
 def filter_parsed_cdhit_for_unique_peptides(parsed_cdhit_output, pheno_a_ids, pheno_b_ids):
     for cluster in parsed_cdhit_output:

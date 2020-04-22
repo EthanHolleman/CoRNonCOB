@@ -1,6 +1,7 @@
 import argparse
 import sys
 
+from cornoncob import TEST_KILLERS, TEST_NICE
 
 def get_args():
     '''
@@ -22,9 +23,13 @@ def get_args():
     
     # add args 
     args = parser.parse_args()
-    if not args.p1 or not args.p2:
-        print('Please supply two directories of different phenotypes')
-        sys.exit(1)
-    
-    
+    if not args.p1 or not args.p2:  # check to make sure p1 and p2 have values
+        if args.test:
+            args.p1 = TEST_KILLERS  # in test mode with no p1 or p2 use included data
+            args.p2 = TEST_NICE
+        else:
+            print('Please supply two directories of different phenotypes')
+            sys.exit(1)  # not in test mode so exit program
+    # rest of args have default values
+
     return args

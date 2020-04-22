@@ -78,14 +78,14 @@ you are currently in the CoRNonCOB directory.
 
    python main.py -p1 [path/to/positive/phenotype] -p2 [path/to/control/phenotype] -o [output/path] -n [run name]
 
-The most important thing to note here are the arguements -p1 and -p2 which
+The most important thing to note here are the arguments -p1 and -p2 which
 should be file paths to directories you would like to assign to each phenotype
 in your CoRNonCOB run. The -p1 directory will always be considered the
 positive phenotype and -p2 will always be the control or wild type.
 
 .. note::  The -p1 and -p2 directories should only contain fasta files of the genomes you wish to assign to each respective phenotype
 
-Below is a complete description of all arguements, you can also display this
+Below is a complete description of all arguments, you can also display this
 menu by running :code:`flag.python main.py --help`.
 
 .. code-block:: text
@@ -115,7 +115,7 @@ below from the CoRNonCOB directory.
 
    python main.py -test True
 
-.. note::  If you have not set a PATH variable for prokka you will still need to use the -k arguement
+.. note::  If you have not set a PATH variable for prokka you will still need to use the -k argument.
 
 To use your own data run CoRNonCOB with your normal command but add the
 :code:`-test True` flag.

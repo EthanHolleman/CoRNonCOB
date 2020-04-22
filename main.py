@@ -1,17 +1,17 @@
-from cornoncob.args_reader import get_args
-from cornoncob.phenotype import Phenotype
-from cornoncob.io_utils import if_not_exists_make
-from cornoncob.inter_pheno import get_unique_peptides
+import os
+
+from Bio import SeqIO
 
 from cornoncob import TEST_PEPS  # set in __init__.py
-from cornoncob.tests.test_utils import read_test_peps, insert_test_peptides_into_all_phenotypes, score_preformance, check_gff_file
-from cornoncob.phenotype import Phenotype
+from cornoncob.args_reader import get_args
 from cornoncob.genome import Genome
-
-from cornoncob.tests.test_utils import check_gff_file
-
-import os
-from Bio import SeqIO
+from cornoncob.inter_pheno import get_unique_peptides
+from cornoncob.io_utils import if_not_exists_make, write_unique_seqs
+from cornoncob.phenotype import Phenotype
+from cornoncob.tests.test_utils import (
+    check_gff_file, insert_test_peptides_into_all_phenotypes, read_test_peps,
+    score_preformance, clean_up_genome_copies)
+from cornoncob.chemical_props import write_peptide_properties
 
 
 def main():
@@ -39,13 +39,13 @@ def main():
         
 
     unique_seqs = get_unique_peptides(phenotypes[0], phenotypes[1])
-    unique_peps_path = os.path.join(run_dir, 'unique_peps.fasta')
-    with open(unique_peps_path, 'w') as upp:
-        for pep in unique_seqs:
-            upp.write(f'>{pep[0]}\n{pep[1]}\n')
+    unique_seqs_path = write_unique_seqs(run_dir, unique_seqs)
+    chemical_props = write_peptide_properties(unique_seqs_path, run_dir)
     
     if args.test:  # TODO: write to log file
-        print(score_preformance(unique_peps_path))
+        print(score_preformance(unique_seqs_path))
+        clean_up_genome_copies(phenotypes)
+        
     
 
     # then if this is a test check to see if we can find the
