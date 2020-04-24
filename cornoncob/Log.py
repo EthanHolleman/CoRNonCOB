@@ -12,10 +12,7 @@ class Log():
         self.start_time = time.time()
         
     def write_string(self, string):
-        self.logfile.write('{}\n'.format(string))
-        if args.test:
-        # test I use to see if program is in testing mode
-            self.logfile.write('Progam is in testing mode')
+        self.logfile.write('{}'.format(string))
         
     def close_log(self):
         self.logfile.close()
@@ -40,7 +37,7 @@ len(phenotype.genomes),phenotype.output_dir))
         and writes number of nc regions to file.
         
         '''
-        self.write_string('\nGenome: {}\tPhenotype: {}\tNumber of non-coding sequences: {}\n'.format(genome.genome_id,
+        self.write_string('Genome: {}\tPhenotype: {}\tNumber of non-coding sequences: {}'.format(genome.genome_id,
                                                                                                      genome.phenotype, len(genome.non_coding_sequences)))
     def get_number_conserved_peptides(self,phenotype):
 
@@ -57,23 +54,23 @@ len(phenotype.genomes),phenotype.output_dir))
                 cp = cp + 1
 
         
-        self.write('\nThere are {} conserved peptides in phenotype {}'.format(cp, phenotype.phenotype))
+        self.write_string('\nThere are {} conserved peptides in phenotype {}'.format(cp, phenotype.phenotype))
 
-    def get_number_unique_peptides(self, genotype):
+    def get_number_unique_peptides(self, directory):
 
         '''
 
-        Method that takes genotype object,
+        Method that takes the directory of the fasta file,
         and writes number of unique peptides
         
         '''
         up = 0
-        f2 = open(genotype.non_coding_file, 'r')
+        f2 = open(directory, 'r')
         for line in f2:
             if line[0] == '>':
                 up = up + 1
 
-        self.write('\nThere are {} unique peptides in genome {}, which is in phenotype {}'.format(up, genome.genome_id, genotype.phenotype))
+        self.write_string('\nThere are {} unique peptides'.format(up))
 
     def calculate_execution_time(self):
         '''
@@ -84,4 +81,5 @@ len(phenotype.genomes),phenotype.output_dir))
 
         elapsed_time = time.time()- self.start_time
 
-        self.write('Execution time: %s seconds' % timedelta(seconds=round(elapsed_time)))
+        self.write_string('\nExecution time: %s seconds' % elapsed_time)
+
