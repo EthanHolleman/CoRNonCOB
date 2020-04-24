@@ -28,8 +28,6 @@ def get_args():
         to be considered conserved within the phenotpe. A value of 1 will\
         mean all genomes must contribute a peptide to a cluster in order\
         for it to be considered conserved.')
-    parser.add_argument('-h', default='cdhit', help='Path to CD-HIT executable.\
-        Only needs to be set if CD-HIT is not in PATH variables.')
      
     # add args and do some basic validations
     args = parser.parse_args()

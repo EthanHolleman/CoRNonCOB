@@ -1,5 +1,14 @@
 \begin{thebibliography}{1}
 
+\bibitem{becknell_spencer_2015}
+Brian Becknell and John~David Spencer.
+\newblock Antimicrobial peptides: Maintaining sterility of the urinary tract.
+\newblock {\em Antimicrobial Peptides}, page 53–65, 2015.
+
+\bibitem{boman_2003}
+H.~G. Boman.
+\newblock Antibacterial peptides: basic facts and emerging concepts, Aug 2003.
+
 \bibitem{duchrow_shtatland_guettler_pivovarov_kramer_weissleder_2009}
 Timo Duchrow, Timur Shtatland, Daniel Guettler, Misha Pivovarov, Stefan Kramer,
   and Ralph Weissleder.
@@ -7,17 +16,21 @@ Timo Duchrow, Timur Shtatland, Daniel Guettler, Misha Pivovarov, Stefan Kramer,
   database-driven text classification.
 \newblock {\em BMC Bioinformatics}, 10(1):317, 2009.
 
-\bibitem{seemann_2014}
-T.~Seemann.
-\newblock Prokka: rapid prokaryotic genome annotation.
-\newblock {\em Bioinformatics}, 30(14):2068–2069, 2014.
+\bibitem{dwyer_dwyer_2012}
+Jeremy~P Dwyer and Peter~L Dwyer.
+\newblock Lactobacillus probiotics may prevent recurrent utis in postmenopausal
+  women.
+\newblock {\em Evidence Based Medicine}, 18(4):141–142, Feb 2012.
 
-\bibitem{vishnepolsky_pirtskhalava_2014}
-Boris Vishnepolsky and Malak Pirtskhalava.
-\newblock Prediction of linear cationic antimicrobial peptides based on
-  characteristics responsible for their interaction with the membranes.
-\newblock {\em Journal of Chemical Information and Modeling},
-  54(5):1512–1523, 2014.
+\bibitem{izadpanah}
+Arash Izadpanah.
+\newblock Antimicrobial peptides.
+
+\bibitem{10.1093/bioinformatics/btl158}
+Weizhong Li and Adam Godzik.
+\newblock {Cd-hit: a fast program for clustering and comparing large sets of
+  protein or nucleotide sequences}.
+\newblock {\em Bioinformatics}, 22(13):1658--1659, 05 2006.
 
 \bibitem{wang_2004}
 Z.~Wang.
