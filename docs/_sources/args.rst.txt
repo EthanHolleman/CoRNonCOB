@@ -1,7 +1,7 @@
 args module
 ===========
 
-.. automodule:: args_reader
+.. automodule:: cornoncob.args_reader
     :members:
     :undoc-members:
     :show-inheritance:

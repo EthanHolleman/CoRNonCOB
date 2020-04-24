@@ -58,15 +58,25 @@ Calling tree from the prokka folder should produce a structure like this one.
     ├── doc
     └── test
 
+The best way to get Prokka talking with CoRNonCOB is to add the Prokka
+executable to your PATH variables. To do so, follow the guide below provided by
+Dr. Wheeler. If Prokka is not located in /usr/local/bin, change the export
+statement in the second step to reflect the path to prokka/bin on your machine.
+
+1. Open the . bashrc file in your home directory (for example, nano /homes/your-user-name/.bashrc ) in a text editor.
+2. Add export PATH="/usr/local/bin/prokka/bin:$PATH" to the last line of the file.
+3. Save the .bashrc file.
+4. Restart your terminal.
+
 
 Install Required Python Packages
---------
-CoRNonCOB requires numpy and Biopython to function. You can install these
+-----------------------------------
+CoRNonCOB requires numpy Biopython and modelamp to function. You can install these
 packages using pip if you don't have them already. 
 
 .. code-block:: bash
 
-   pip install Biopython numpy
+   pip install Biopython numpy modelamp
 
 Example Run
 --------------

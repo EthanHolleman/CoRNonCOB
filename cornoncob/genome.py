@@ -150,8 +150,6 @@ class Genome():
     def write_peptides_to_fasta_file(self, output_dir=None,
                                      stop_codon_symbol='*', min_len=6):
         '''
-        DRAFT
-
         After the noncoding peptides have been translated this function is
         called to write those peptides to a file so a motif finding or
         clustering program can find conserved and or differential NoncodingSeqs.

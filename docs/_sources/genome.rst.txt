@@ -1,7 +1,7 @@
 genome module
 =============
 
-.. automodule:: genome
+.. automodule:: cornoncob.genome
     :members:
     :undoc-members:
     :show-inheritance:

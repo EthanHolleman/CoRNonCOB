@@ -218,12 +218,22 @@ You should get the help menu.</p>
 └── test
 </pre></div>
 </div>
+<p>The best way to get Prokka talking with CoRNonCOB is to add the Prokka
+executable to your PATH variables. To do so, follow the guide below provided by
+Dr. Wheeler. If Prokka is not located in /usr/local/bin, change the export
+statement in the second step to reflect the path to prokka/bin on your machine.</p>
+<ol class="arabic simple">
+<li><p>Open the . bashrc file in your home directory (for example, nano /homes/your-user-name/.bashrc ) in a text editor.</p></li>
+<li><p>Add export PATH=”/usr/local/bin/prokka/bin:$PATH” to the last line of the file.</p></li>
+<li><p>Save the .bashrc file.</p></li>
+<li><p>Restart your terminal.</p></li>
+</ol>
 </div>
 <div class="section" id="install-required-python-packages">
 <h2>Install Required Python Packages<a class="headerlink" href="#install-required-python-packages" title="Permalink to this headline">¶</a></h2>
-<p>CoRNonCOB requires numpy and Biopython to function. You can install these
+<p>CoRNonCOB requires numpy Biopython and modelamp to function. You can install these
 packages using pip if you don’t have them already.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install Biopython numpy
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install Biopython numpy modelamp
 </pre></div>
 </div>
 </div>
@@ -234,7 +244,7 @@ you are currently in the CoRNonCOB directory.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python main.py -p1 <span class="o">[</span>path/to/positive/phenotype<span class="o">]</span> -p2 <span class="o">[</span>path/to/control/phenotype<span class="o">]</span> -o <span class="o">[</span>output/path<span class="o">]</span> -n <span class="o">[</span>run name<span class="o">]</span>
 </pre></div>
 </div>
-<p>The most important thing to note here are the arguements -p1 and -p2 which
+<p>The most important thing to note here are the arguments -p1 and -p2 which
 should be file paths to directories you would like to assign to each phenotype
 in your CoRNonCOB run. The -p1 directory will always be considered the
 positive phenotype and -p2 will always be the control or wild type.</p>
@@ -242,7 +252,7 @@ positive phenotype and -p2 will always be the control or wild type.</p>
 <p class="admonition-title">Note</p>
 <p>The -p1 and -p2 directories should only contain fasta files of the genomes you wish to assign to each respective phenotype</p>
 </div>
-<p>Below is a complete description of all arguements, you can also display this
+<p>Below is a complete description of all arguments, you can also display this
 menu by running <code class="code docutils literal notranslate"><span class="pre">flag.python</span> <span class="pre">main.py</span> <span class="pre">--help</span></code>.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>-h, --help  show this help message and exit
 -p1 P1      Path to directory containing all genomes of the positive
@@ -268,7 +278,7 @@ below from the CoRNonCOB directory.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you have not set a PATH variable for prokka you will still need to use the -k arguement</p>
+<p>If you have not set a PATH variable for prokka you will still need to use the -k argument.</p>
 </div>
 <p>To use your own data run CoRNonCOB with your normal command but add the
 <code class="code docutils literal notranslate"><span class="pre">-test</span> <span class="pre">True</span></code> flag.</p>

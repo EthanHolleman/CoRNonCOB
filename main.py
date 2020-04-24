@@ -1,5 +1,4 @@
 import os
-
 from Bio import SeqIO
 
 from cornoncob import TEST_PEPS  # set in __init__.py
@@ -22,20 +21,22 @@ def main():
     phenotypes = [Phenotype(pheno_dir, run_dir)
                   for pheno_dir in (args.p1, args.p2)]
 
-    if args.test:
+    if args.test:  # program is run in test mode so run initial prokka to insert test peps
         test_data = insert_test_peptides_into_all_phenotypes(phenotypes[0], phenotypes[1],
                                                  prokka_exec=args.k)
 
     for i, p in enumerate(phenotypes):
         for genome in p.genomes:
             genome.make_gene_predictions(path_to_exec=args.k)
-            if args.test:
+            if args.test:  # make sure no test peps in coding regions if test 
                 check_gff_file(genome.gene_prediction_file, test_data[i])
             genome.get_non_coding_regions()
             genome.translate_non_coding_seqs()
             genome.write_peptides_to_fasta_file()
         
-        p.get_conserved_sequences()  # compare peptides cross genomes in phemo
+        p.get_conserved_sequences(s=args.s, con=args.c, cdhit_exec=args.h)  # compare peptides cross genomes in pheno
+        # gets the conserved peptides in one phenotype which are later compared
+        # with the conserved peptides of the other phenotype
         
 
     unique_seqs = get_unique_peptides(phenotypes[0], phenotypes[1])
@@ -43,8 +44,8 @@ def main():
     chemical_props = write_peptide_properties(unique_seqs_path, run_dir)
     
     if args.test:  # TODO: write to log file
-        print(score_preformance(unique_seqs_path))
-        clean_up_genome_copies(phenotypes)
+        print(score_preformance(unique_seqs_path))  # tuple (percent positive, percent negatvie)
+        clean_up_genome_copies(phenotypes)  # remove copy genomes used in test
         
     
 

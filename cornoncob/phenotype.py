@@ -6,11 +6,6 @@ from cornoncob.genome import Genome
 from cornoncob.io_utils import (convert_genome_to_header_dict,
                                 if_not_exists_make, parse_cdhit_output_file)
 
-# TODO
-# phenotype objects should create their own directory within the given
-# run directory then potentially hand that directory off to genome objects
-# when they are created and in genome __init__ functions genome instance
-# will make its own directory with the phenotype dir as the parent directory
 
 class Phenotype():
     '''
@@ -98,23 +93,13 @@ class Phenotype():
 
     def get_conserved_sequences(self, cdhit_exec='cdhit', s='0.90', con=0.75):
         '''
-        WIP
-
-        TODO: Test chhit call is working as expected and add parseing of clstr
-        file. Then need to find conserved seqs within the file and seperate
-        those out into a new file for comparison with the other phenotype.
-
-
-        Using some metrics and methods pulls out the conserved non-coding
-        sequences from a collection of genomes stored in this phenotype
-        instance.
-
         :param cdhit_exec: String. Path to cdhit executable default = cdhit
         :param s: String. Num 0-1 sets min length difference between rep seq \
         and subject seqs
         :param con: Int. Percentage of genomes that must have a peptide in a \
         cluster for that cluster to be considered conserved.
         '''
+        s = str(s)  # cast in case an int or float gets passed in 
 
         # get all file paths together
         phenotype_peptides = os.path.join(
@@ -124,7 +109,8 @@ class Phenotype():
         conserved_seq_fasta = os.path.join(
             self.output_dir, f'{self.phenotype}_conserved_peptides.fasta')
 
-        genome_peptides = [f'"{genome.non_coding_file}"' for genome in self.genomes]
+        genome_peptides = [
+            f'"{genome.non_coding_file}"' for genome in self.genomes]
         # get all of the peptide file paths in one list
 
         cat_cmd = ['cat'] + genome_peptides + ['>', phenotype_peptides]
@@ -133,7 +119,6 @@ class Phenotype():
                       '-p', '1', '-s', s]
 
         # concat all individual peptide files
-        print(' '.join(cat_cmd))
         cat_call = subprocess.call(' '.join(cat_cmd), shell=True)
         cdhit_call = subprocess.call(cd_hit_cmd)  # run cd-hit on cated file
 
@@ -165,4 +150,9 @@ class Phenotype():
         self.conserved_seqs = conserved_seq_fasta
 
     def assign_headers_to_seqs(self, header_list):
-        return [(header, self.peptide_dict[header]) for header in header_list if header in self.peptide_dict]
+        '''
+        Creates a list of tuples with first item is the header of a fasta record
+        and the second item is the sequence for that record
+        '''
+        return [(header, self.peptide_dict[header]) for header in
+                header_list if header in self.peptide_dict]

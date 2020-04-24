@@ -43,23 +43,8 @@ def filter_prokka_files(prokka_results_path, *args):
     return selected_files
 
 
-def read_phenotype_map(map_path):
-    '''
-    If the user has genomes all over the place and does not
-    want to aggregate them they can provide a csv file with the
-    headers below to create Phenotype objects in the main
-    function.
-
-    PHENOTYPE, FILEPATH
-    '''
-    pass
-    # TODO: Write this function and add method in phenotype or main
-    # to make phenotype object from this kind of input
-
-    # Should return a dictionary key = filepath, value = phenotype
-
-
-def convert_genome_to_header_dict(genome_path, input_format='fasta', record_format=list):
+def convert_genome_to_header_dict(genome_path, input_format='fasta',
+                                  record_format=list):
     '''
     Reads in a file type (likely fasta) and creates a dictionary where keys
     are the sequence headers and the values are lists of nucleotides. Each
@@ -156,6 +141,10 @@ def parse_cdhit_record(record, genome_id=True):
 def write_unique_seqs(run_dir, unique_seqs, file_name='unique_peps.fasta'):
     '''
     Write peptides from unique_seqs list to fasta output.
+
+    :param: run_dir: String. Path of the current run directory.
+    :param: unique_seqs. List. List of unique peptide sequences. Represents \
+        the final output of the program.
     '''
     headers = set({})
     unique_peps_path = os.path.join(run_dir, file_name)
@@ -167,41 +156,6 @@ def write_unique_seqs(run_dir, unique_seqs, file_name='unique_peps.fasta'):
     return unique_peps_path
 
 
-
-
-'''
-def filter_parsed_cdhit_for_unique_peptides(parsed_cdhit_output, pheno_a_ids, pheno_b_ids):
-    for cluster in parsed_cdhit_output:
-            participating_genomes, rep_seq = set([]), None
-            for record in cluster:
-                if record[-2] == '*':
-                    rep_seq = record
-                participating_genomes.add(record[-1])  # add genome id
-                
-            if len(participating_genomes) == 1:
-                unique
-
-
-def filter_parsed_cdhit_output(parsed_cdhit_output, participation_thres=0.85, num_members=2, conserved=True):
-    for cluster in parsed_cdhit_output:
-            participating_genomes, rep_seq = set([]), None
-            for record in cluster:
-                if record[-2] == '*':
-                    rep_seq = record
-                participating_genomes.add(record[-1])  # add genome id
-                
-            if conserved:
-                if 
-
-            if len(participating_genomes) / num_members >= participation_thres and conserved:
-                # percentage of genomes that participate in this cluster
-                # is greater than or equal to con threshold
-                    conserved_records.append((rep_seq, len(cluster)))
-'''              
-
-
-
-
 def parse_cdhit_output_file(clstr_file):
     '''
     Iterates through a cd-hit output file and returns a list of clusters.
@@ -210,6 +164,8 @@ def parse_cdhit_output_file(clstr_file):
     of tuples. Over data structure looks like [[()]]. Formating of the data
     inside the tuples which represent the actual sequences is determined
     by the parse_cdhit_record function.
+
+    :param clstr_file: String. Path to cd-hit output .clstr file.
     '''
     clusters = []  # store all clusters in list cluster num is index in list
     i = -1
@@ -225,9 +181,3 @@ def parse_cdhit_output_file(clstr_file):
             else:
                 break
         return clusters
-
-
-def make_phenotype_from_dir(dir_path):
-    phenotype = os.path.basename(dir_path)
-    genome_dirs = [os.path.join(dir_path, g) for g in os.listdir(dir_path)]
-    

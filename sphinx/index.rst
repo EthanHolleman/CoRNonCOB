@@ -6,6 +6,14 @@
 Welcome to CoRNonCOB's documentation!
 =====================================
 
+CoRNonCOB is a pipeline designed to identify candidate antimicrobial peptides
+in prokaryotes using only genomic data.
+ 
+To learn more about why it was created and how it works you can visit the Project
+Overview page. To get started using CoRNonCOB right away visit the Quickstart
+page which includes info on installing dependencies, an example run and how to
+try CoRNonCOB with the included test data.
+
 .. toctree::
    :maxdepth: 1
    :caption: Table of Contents

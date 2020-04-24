@@ -1,7 +1,7 @@
 io\_utils module
 ================
 
-.. automodule:: io_utils
+.. automodule:: cornoncob.io_utils
     :members:
     :undoc-members:
     :show-inheritance:

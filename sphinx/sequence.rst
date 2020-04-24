@@ -1,7 +1,7 @@
 sequence module
 ===============
 
-.. automodule:: sequence
+.. automodule:: cornoncob.sequence
     :members:
     :undoc-members:
     :show-inheritance:

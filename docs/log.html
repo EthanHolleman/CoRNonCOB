@@ -168,8 +168,59 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="log-module">
-<h1>log module<a class="headerlink" href="#log-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-cornoncob.Log">
+<span id="log-module"></span><h1>log module<a class="headerlink" href="#module-cornoncob.Log" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="cornoncob.Log.Log">
+<em class="property">class </em><code class="sig-prename descclassname">cornoncob.Log.</code><code class="sig-name descname">Log</code><span class="sig-paren">(</span><em class="sig-param">logfile</em><span class="sig-paren">)</span><a class="headerlink" href="#cornoncob.Log.Log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Methods for writing to log file</p>
+<dl class="method">
+<dt id="cornoncob.Log.Log.calculate_execution_time">
+<code class="sig-name descname">calculate_execution_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cornoncob.Log.Log.calculate_execution_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that records execution time of program</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cornoncob.Log.Log.close_log">
+<code class="sig-name descname">close_log</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cornoncob.Log.Log.close_log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="cornoncob.Log.Log.get_genotype_parameters">
+<code class="sig-name descname">get_genotype_parameters</code><span class="sig-paren">(</span><em class="sig-param">genome</em><span class="sig-paren">)</span><a class="headerlink" href="#cornoncob.Log.Log.get_genotype_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that takes in genome object,
+and writes number of nc regions to file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cornoncob.Log.Log.get_number_conserved_peptides">
+<code class="sig-name descname">get_number_conserved_peptides</code><span class="sig-paren">(</span><em class="sig-param">phenotype</em><span class="sig-paren">)</span><a class="headerlink" href="#cornoncob.Log.Log.get_number_conserved_peptides" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that takes phenotype object,
+and writes number of conserved peptides</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cornoncob.Log.Log.get_number_unique_peptides">
+<code class="sig-name descname">get_number_unique_peptides</code><span class="sig-paren">(</span><em class="sig-param">genotype</em><span class="sig-paren">)</span><a class="headerlink" href="#cornoncob.Log.Log.get_number_unique_peptides" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that takes genotype object,
+and writes number of unique peptides</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cornoncob.Log.Log.get_phenotype_parameters">
+<code class="sig-name descname">get_phenotype_parameters</code><span class="sig-paren">(</span><em class="sig-param">phenotype</em><span class="sig-paren">)</span><a class="headerlink" href="#cornoncob.Log.Log.get_phenotype_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that takes phenotype object,
+and writes its parameters to a log file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cornoncob.Log.Log.write_string">
+<code class="sig-name descname">write_string</code><span class="sig-paren">(</span><em class="sig-param">string</em><span class="sig-paren">)</span><a class="headerlink" href="#cornoncob.Log.Log.write_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 
 

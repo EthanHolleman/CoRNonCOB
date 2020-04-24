@@ -1,7 +1,7 @@
 log module
 ===============
 
-.. automodule:: Log
+.. automodule:: cornoncob.Log
     :members:
     :undoc-members:
     :show-inheritance:
