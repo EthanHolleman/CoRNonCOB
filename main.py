@@ -44,12 +44,11 @@ def main():
         
 
     unique_seqs = get_unique_peptides(phenotypes[0], phenotypes[1])
-    unique_seqs_path = write_unique_seqs(run_dir, unique_seqs)
-    chemical_props = write_peptide_properties(unique_seqs_path, run_dir)
+    unique_peps_path = write_unique_seqs(run_dir, unique_seqs)
+    chemical_props = write_peptide_properties(unique_peps_path, run_dir)
     log.get_number_unique_peptides(unique_peps_path)
     
     if args.test:  # TODO: write to log file
-        print(score_preformance(unique_seqs_path))
         clean_up_genome_copies(phenotypes)
         log.get_number_unique_peptides(unique_peps_path)
         
