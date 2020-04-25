@@ -27,6 +27,7 @@ def main():
     
 
     if args.test:  # program is run in test mode so run initial prokka to insert test peps
+        log.write_string('CoRNonCOB Testing Mode')
         test_data = insert_test_peptides_into_all_phenotypes(phenotypes[0], phenotypes[1],
                                                  prokka_exec=args.k)
 
@@ -51,6 +52,7 @@ def main():
     if args.test:  # TODO: write to log file
         clean_up_genome_copies(phenotypes)
         log.get_number_unique_peptides(unique_peps_path)
+        log.get_score_preformance(score_preformance(unique_seqs_path))
         
     log.calculate_execution_time()
     
