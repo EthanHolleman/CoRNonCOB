@@ -18,7 +18,7 @@ def main():
 
     args = get_args()  # parse arguements from the command line
     run_dir = if_not_exists_make(args.o, args.n)
-    log = Log(run_dir + '.log')
+    log = Log(os.path.join(run_dir,'cornoncob.log'))
     
     if args.test:  # make from included test data 
         phenotypes, pos_insertions, neg_insertions = make_test_phenotypes(run_dir)
