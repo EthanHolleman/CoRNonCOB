@@ -15,7 +15,7 @@ def get_args():
     parser.add_argument('-p2', help='Path to directory containing all genome of the control (wild-type) phenotype')
     parser.add_argument('-o', default='.', help='Path to output directory')
     parser.add_argument('-t', default=2, help='Number of threads to use while running Prokka')
-    parser.add_argument('-n', default='corncob', help='Run name')
+    parser.add_argument('-n', default='cornoncob_run', help='Run name')
     parser.add_argument('-k', default='prokka', help='Path to prakka executable if not in PATH variable')
     parser.add_argument('-test', default=False, help='If True, runs program in test mode')
     parser.add_argument('-s', default=0.90, help='Proportion of coverage of \

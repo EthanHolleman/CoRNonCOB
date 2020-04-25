@@ -1,4 +1,5 @@
 from cornoncob.io_utils import parse_gff, if_not_exists_make, convert_genome_to_header_dict
+from cornoncob.phenotype import Phenotype
 from Bio import SeqIO
 from Bio.Seq import Seq
 import numpy as np
@@ -7,7 +8,7 @@ import sys
 import subprocess
 import os
 
-from cornoncob import TEST_PEPS
+from cornoncob import TEST_PEPS, TEST_KILLERS, TEST_NICE
 sys.path.append(".")
 
 
@@ -55,7 +56,25 @@ def insert_test_peptides_into_all_phenotypes(postive_pheno, negative_pheno,
     return positive_test_data, negative_test_data
 
 
-def insert_test_peptides_into_phenotype(phenotype, test_peptide_list, stop=True,
+def make_test_phenotypes(run_dir):
+    # just for testing make based on test data
+    pos_test_peps, neg_test_peps = read_test_peps(TEST_PEPS)
+    pos_test_genomes, pos_in_sites = insert_test_peptides_into_phenotype(TEST_KILLERS,
+                                                                        pos_test_peps)
+    neg_test_genomes, neg_in_sites = insert_test_peptides_into_phenotype(TEST_NICE,
+                                                                         neg_test_peps)
+    return [Phenotype(pos_test_genomes, run_dir),
+            Phenotype(neg_test_genomes, run_dir)], pos_in_sites, neg_in_sites
+    
+    # return list of the phenotypes set up based on the inserted test
+    # peptide files 
+    # now just need to after run prokka on these in test mode run through and
+    # remove the coding regions which contain the insterted test peptides
+    # by modifying the gff file before getting non-coding regions
+    
+
+
+def insert_test_peptides_into_phenotype(pheno_dir, test_peptide_list, stop=True,
                                         seed=100, prokka_exec='prokka'):
     '''
     Inserts the given test_peptides from the test_peptide_list into the
@@ -65,49 +84,47 @@ def insert_test_peptides_into_phenotype(phenotype, test_peptide_list, stop=True,
     np.random.seed(seed)
     test_data = {}
     num_test_peps = len(test_peptide_list)
-
-    for i, genome in enumerate(phenotype.genomes):
-        genome_copy = f'{genome.genome_file}.copy'
-        if '.copy' in genome.genome_file:
-            continue  # copy of a genome do not add peptides
-        else:
-            genome.make_gene_predictions(path_to_exec=prokka_exec)
-            genome_records_dict = SeqIO.to_dict(
-                SeqIO.parse(genome.genome_file, 'fasta')
+    insertion_sites_dict = {}  # filepath to list of instertion sites
+    test_dir = if_not_exists_make(pheno_dir, os.path.basename(pheno_dir) +'_test_genomes')
+    
+    for genome_file in os.listdir(pheno_dir):
+        insertion_sites = {}
+        abs_genome_file = os.path.join(pheno_dir, genome_file)
+        if os.path.isdir(abs_genome_file):
+            continue
+        print(abs_genome_file)
+        genome_records_dict = SeqIO.to_dict(
+                SeqIO.parse(abs_genome_file, 'fasta')
             )  # turn genome file into dictionary by header
-            gene_records = parse_gff(genome.gene_prediction_file, 0, 3, 4)
-            # pull out gene predictions
-            random_indicies = np.random.choice(
-                len(gene_records), num_test_peps, replace=False
-            )  # pick random gene headers to insert into
-            random_gene_headers = [gene_records[i] for i in random_indicies]
-            # store the headers coresponding to random indicies
-
-            for j, random_gene in enumerate(random_gene_headers):
-                gene_header, start, end = random_gene[0], int(
-                    random_gene[1]), int(random_gene[2])
-                peptide = test_peptide_list[j]
-                buffer = np.random.randint(25, 30)
-                # num nucleotides between coding and inserted peptide start
-                current_seq = genome_records_dict[gene_header].seq
-                if stop:
-                    peptide[2] = 'TAA' + peptide[2] + 'TAA'
-                seq_with_test_pep = current_seq[:end] + \
-                    current_seq[end:end+buffer] + \
-                    peptide[2] + current_seq[end+buffer:]
-
-                genome_records_dict[gene_header].seq = seq_with_test_pep
-
-                test_data[gene_header] = int(end+buffer)  # add location
-
+        random_record_headers = np.random.choice(
+                len(genome_records_dict.keys()), num_test_peps, replace=False
+            )
+        random_record_headers = [list(genome_records_dict.keys())[i] for i in random_record_headers]
+        # pick random headers to insert into
+        for j, random_header in enumerate(random_record_headers):
+            peptide = 'TAA' + test_peptide_list[j][2] + 'TAA'
+            seq = str(genome_records_dict[random_header].seq)
+            insertion_start = np.random.randint(20, len(seq))
+            insertion_end = insertion_start + len(peptide)
+            inserted_seq = seq[:insertion_start] + peptide + seq[insertion_start:]
+            
+            genome_records_dict[random_header].seq = Seq(inserted_seq)
+            # reassing the seq with inserted peptide to the header
+            insertion_sites[random_header] = (insertion_start,
+                                    insertion_end)
+        
+        genome_copy = f'{genome_file}.copy'  # genome copy file name
+        genome_copy_file_path = os.path.join(test_dir, genome_copy)  # full path
+        print(genome_copy_file_path)
         records = [seq_rec for key, seq_rec in genome_records_dict.items()]
-        SeqIO.write(records, genome_copy, 'fasta')
-        phenotype.genomes[i].genome_file = genome_copy
-        phenotype.genomes[i].genome_dict = convert_genome_to_header_dict(
-            genome_copy)
-        # overwrite the existing genome file with the modified and unmodified
-
-    return test_data
+         # convert dict back to just records
+        SeqIO.write(records, genome_copy_file_path, 'fasta')
+        print('wrote dat file', len(records))
+        # write the copy file
+        insertion_sites_dict[genome_copy_file_path] = insertion_sites
+    
+    return test_dir, insertion_sites_dict
+    # now need to make the phenotypes using this new test data
 
 
 def score_preformance(results_file):
@@ -127,6 +144,8 @@ def score_preformance(results_file):
                 totals[0] += 1
                 if row[1] in peptide_set:
                     scores[0] += 1
+                else:
+                    print(row[1])
             else:
                 totals[1] += 1
                 if row[1] in peptide_set:
@@ -140,16 +159,21 @@ def check_gff_file(gff_file, test_data):
     Checks to make sure that no coding regions overlap with peptide insertions.
     If any overlap is found removes that coding region from the gff file and
     rewrites.
+    
+    Test data is now a dictionary with the header as key and the insertion
+    start and end sites as values
+    test data should just be the dictory of headers
     '''
     good_rows = []
     with open(gff_file) as gff:
         reader = csv.reader(gff, delimiter='\t')
         for row in reader:
             if row[0] in test_data:
-                p_s = int(test_data[row[0]])
-                if p_s >= int(row[3]) and p_s <= int(row[4]):
-                    print('removed region!!!')
-                    continue
+                gene_start, gene_end = int(row[3]), int(row[4])
+                p_s, p_e = test_data[row[0]]  # start position end position
+                if (p_s < gene_start and p_e > gene_start) or (p_s < gene_end and p_e > gene_end) or (p_s > gene_start and p_e < gene_end):
+                    print('removed region', p_s, p_e, gene_start, gene_end)
+                    continue 
                 else:
                     good_rows.append(row)
 

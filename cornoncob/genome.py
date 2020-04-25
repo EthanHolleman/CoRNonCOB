@@ -132,11 +132,24 @@ class Genome():
 
                     j += 1
                     if j < len(coding_regions_list):
+                        prev_stop = stop
                         start, stop = coding_regions_list[j]
+                        if start < prev_stop and j+1 < len(coding_regions_list):
+                            j += 1  # skip to next since overlapping region found
+                            start, stop =coding_regions_list[j]      
                     else:
                         self.non_coding_seqs.append(
                             NoncodingSeq(description, ''.join(working_seq[i:]), i))
                         break
+        not_in_coding = 0
+        for fasta_header in self.genome_dict:  # if no coding regions in record
+            if fasta_header not in coding_regions_dict:
+                not_in_coding += 1
+                self.non_coding_seqs.append(
+                    NoncodingSeq(fasta_header,
+                                ''.join(self.genome_dict[fasta_header]),
+                                0))  # add the whole record
+        print(not_in_coding, ' entries ', 'of ', len(self.genome_dict.keys()))
 
     def translate_non_coding_seqs(self):
         '''
