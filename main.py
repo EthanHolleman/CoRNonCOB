@@ -49,7 +49,6 @@ def main():
     log.get_number_unique_peptides(unique_peps_path)
     
     if args.test:  # TODO: write to log file
-        clean_up_genome_copies(phenotypes)
         log.get_number_unique_peptides(unique_peps_path)
         
     log.calculate_execution_time()
