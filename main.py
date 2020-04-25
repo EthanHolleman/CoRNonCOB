@@ -28,6 +28,10 @@ def main():
         
     for phenotype in phenotypes:
         log.get_phenotype_parameters(phenotype)
+    
+
+    if args.test:  # program is run in test mode so run initial prokka to insert test peps
+        log.write_string('CoRNonCOB Testing Mode')
 
     for pheno in phenotypes:  # make gene predictions
         for genome in pheno.genomes:
@@ -54,10 +58,9 @@ def main():
     chemical_props = write_peptide_properties(unique_peps_path, run_dir)
     log.get_number_unique_peptides(unique_peps_path)
     
-    if args.test:  # TODO: write score preformance to log file
-        print(score_preformance(unique_peps_path))
-        #clean_up_genome_copies(phenotypes)
-    
+    if args.test:  # TODO: write to log file
+        log.get_number_unique_peptides(unique_peps_path)
+        log.get_score_preformance(score_preformance(unique_peps_path))
         
     log.calculate_execution_time()
 

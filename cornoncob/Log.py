@@ -79,7 +79,18 @@ len(phenotype.genomes),phenotype.output_dir))
          
         '''
 
-        elapsed_time = time.time()- self.start_time
+        elapsed_time = (time.time()- self.start_time)/60
 
-        self.write_string('\nExecution time: %s seconds' % elapsed_time)
+        self.write_string('\nExecution time: %s mins' % elapsed_time)
+
+    def get_score_preformance(self,sp):
+        '''
+        Method that takes in tuple, and prints score preformance
+        for positive and negative peptides
+        '''
+
+        positive = sp[0]
+        negative = sp[1]
+
+        self.write_string('Positive score preformance: {} Negative score preformance: {}'.format(positive,negative))
 

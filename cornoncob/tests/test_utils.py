@@ -92,7 +92,6 @@ def insert_test_peptides_into_phenotype(pheno_dir, test_peptide_list, stop=True,
         abs_genome_file = os.path.join(pheno_dir, genome_file)
         if os.path.isdir(abs_genome_file):
             continue
-        print(abs_genome_file)
         genome_records_dict = SeqIO.to_dict(
                 SeqIO.parse(abs_genome_file, 'fasta')
             )  # turn genome file into dictionary by header
@@ -115,11 +114,9 @@ def insert_test_peptides_into_phenotype(pheno_dir, test_peptide_list, stop=True,
         
         genome_copy = f'{genome_file}.copy'  # genome copy file name
         genome_copy_file_path = os.path.join(test_dir, genome_copy)  # full path
-        print(genome_copy_file_path)
         records = [seq_rec for key, seq_rec in genome_records_dict.items()]
          # convert dict back to just records
         SeqIO.write(records, genome_copy_file_path, 'fasta')
-        print('wrote dat file', len(records))
         # write the copy file
         insertion_sites_dict[genome_copy_file_path] = insertion_sites
     
@@ -144,8 +141,6 @@ def score_preformance(results_file):
                 totals[0] += 1
                 if row[1] in peptide_set:
                     scores[0] += 1
-                else:
-                    print(row[1])
             else:
                 totals[1] += 1
                 if row[1] in peptide_set:
@@ -172,7 +167,6 @@ def check_gff_file(gff_file, test_data):
                 gene_start, gene_end = int(row[3]), int(row[4])
                 p_s, p_e = test_data[row[0]]  # start position end position
                 if (p_s < gene_start and p_e > gene_start) or (p_s < gene_end and p_e > gene_end) or (p_s > gene_start and p_e < gene_end):
-                    print('removed region', p_s, p_e, gene_start, gene_end)
                     continue 
                 else:
                     good_rows.append(row)
