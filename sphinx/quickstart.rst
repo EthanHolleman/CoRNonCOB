@@ -22,7 +22,6 @@ Install Prokka
 
 1. `Visit the GitHub and follow their install directions <https://github.com/tseemann/prokka>`_
 
-.. note::  I ran the last command from my home directory. I am pretty sure Prokka sets itself up where you run that last command.
 
 2. Test to make sure Prokka is responsive. My commands to do so look like below.
 
@@ -95,21 +94,35 @@ positive phenotype and -p2 will always be the control or wild type.
 
 .. note::  The -p1 and -p2 directories should only contain fasta files of the genomes you wish to assign to each respective phenotype
 
+Running the code above with correct paths will write all program output, including
+a fasta file with peptides uniquely conserved in phenotype -p1 and a csv file
+of calculated chemical properties for those peptides, to a folder called
+run_name in the path given by the -o argument.
+
 Below is a complete description of all arguments, you can also display this
 menu by running :code:`flag.python main.py --help`.
 
 .. code-block:: text
 
-    -h, --help  show this help message and exit
-    -p1 P1      Path to directory containing all genomes of the positive
-                phenotype
-    -p2 P2      Path to directory containing all genome of the control (wild-
-                type) phenotype
-    -o O        Path to output directory
-    -t T        Number of threads to use while running Prokka
-    -n N        Run name
-    -k K        Path to prakka executable if not in PATH variable
-    -test TEST  If True, runs program in test mode
+  -h, --help  show this help message and exit
+  -p1 P1      Path to directory containing all genomes of the positive
+              phenotype
+  -p2 P2      Path to directory containing all genome of the control (wild-
+              type) phenotype
+  -o O        Path to output directory
+  -t T        Number of threads to use while running Prokka
+  -n N        Run name
+  -k K        Path to prakka executable if not in PATH variable
+  -test TEST  If True, runs program in test mode
+  -s S        Proportion of coverage of subject sequence to representative
+              sequence required for CD-HIT. A value of 1 means sequences must
+              be exact same length. Values less than one allow subject
+              sequences to be shorter than representative sequences.
+  -c C        Min proportion of genomes that must participate in a cluster of
+              similar peptides in order for that cluster to be considered
+              conserved within the phenotpe. A value of 1 will mean all
+              genomes must contribute a peptide to a cluster in order for it
+              to be considered conserved.
 
 
 Running in Test Mode
@@ -125,7 +138,5 @@ below from the CoRNonCOB directory.
 
    python main.py -test True
 
-.. note::  If you have not set a PATH variable for prokka you will still need to use the -k argument.
+.. note::  If you have not set a PATH variable for Prokka you will still need to use the -k argument. It is highly recommended to follow the directions in the Install Prokka section instead. 
 
-To use your own data run CoRNonCOB with your normal command but add the
-:code:`-test True` flag.

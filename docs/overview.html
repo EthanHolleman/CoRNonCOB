@@ -88,7 +88,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Project Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#what-are-small-peptides-why-do-we-care">What are Small Peptides? Why do we care?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#abstract">Abstract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#for-more-information">For More Information</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="files.html">Understanding the Output File Structure</a></li>
@@ -161,8 +162,32 @@
             
   <div class="section" id="project-overview">
 <h1>Project Overview<a class="headerlink" href="#project-overview" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="what-are-small-peptides-why-do-we-care">
-<h2>What are Small Peptides? Why do we care?<a class="headerlink" href="#what-are-small-peptides-why-do-we-care" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="abstract">
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this headline">¶</a></h2>
+<p>CoRNonCOB (Compare Really Non-Conserved Oligopeptides in Bacteria) is a tool
+that identifies peptides in the non-coding regions of bacterial genomes
+that may contribute to a phenotype of interest. CoRNonCOB is designed to work
+at the very specific scale of individual phenotypes of specific strains of
+bacteria and because of this RNA-seq data that could illuminate the expression
+profiles of the bacteria of interest may not be available. Therefore,
+CoRNonCOB attempts to leverage genomic data by identifying peptides in
+non-coding regions that are conserved in the members of a positive phenotype
+and absent in a control.</p>
+<p>With this tool, we hope to identify the peptides that are unique
+to <em>Lactobacillus crispatus</em> that produce a microbial
+agent to kill E. coli bacteria. Through identifying these unique peptides,
+we hope to provide another parameter to characterize phenotypes.
+Our tool takes x amount of genomes in FASTA format  from each
+phenotype, and generates the peptides unique to each
+respective phenotype. Our tool is available at the
+<a class="reference external" href="https://github.com/EthanHolleman/CoRNonCOB">GitHib page here</a>.</p>
+</div>
+<div class="section" id="for-more-information">
+<h2>For More Information<a class="headerlink" href="#for-more-information" title="Permalink to this headline">¶</a></h2>
+<p>For more information on the details of the project, pipeline structure,
+results and citations please visit our application note which can be downloaded
+from the link below.</p>
+<p>CoRNonCOB Application Note <a class="reference download internal" download="" href="_downloads/6e7e823308cfa5a024103f4a24295897/App_Note.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a></p>
 </div>
 </div>
 
