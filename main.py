@@ -19,9 +19,9 @@ def main():
     args = get_args()  # parse arguements from the command line
     run_dir = if_not_exists_make(args.o, args.n)
     log = Log(os.path.join(run_dir,'cornoncob.log'))
-    
     if args.test:  # make from included test data 
         phenotypes, pos_insertions, neg_insertions = make_test_phenotypes(run_dir)
+        log.write_string('CoRNonCOB testing mode')
     else:
         phenotypes = [Phenotype(pheno_dir, run_dir)
                   for pheno_dir in (args.p1, args.p2)]
@@ -30,9 +30,7 @@ def main():
         log.get_phenotype_parameters(phenotype)
     
 
-    if args.test:  # program is run in test mode so run initial prokka to insert test peps
-        log.write_string('CoRNonCOB Testing Mode')
-
+    
     for pheno in phenotypes:  # make gene predictions
         for genome in pheno.genomes:
             genome.make_gene_predictions(path_to_exec=args.k)
@@ -58,8 +56,7 @@ def main():
     chemical_props = write_peptide_properties(unique_peps_path, run_dir)
     log.get_number_unique_peptides(unique_peps_path)
     
-    if args.test:  # TODO: write to log file
-        log.get_number_unique_peptides(unique_peps_path)
+    if args.test:  
         log.get_score_preformance(score_preformance(unique_peps_path))
         
     log.calculate_execution_time()
