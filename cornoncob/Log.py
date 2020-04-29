@@ -26,7 +26,7 @@ class Log():
         
         '''
         
-        self.write_string('Phenotype: {}\tNum Genomes: {}\tOutput_dir: {}\n'.format(phenotype.phenotype,
+        self.write_string('\nPhenotype: {}\tNum Genomes: {}\tOutput_dir: {}'.format(phenotype.phenotype,
 len(phenotype.genomes),phenotype.output_dir))
 
     def get_genotype_parameters(self, genome):
@@ -37,7 +37,7 @@ len(phenotype.genomes),phenotype.output_dir))
         and writes number of nc regions to file.
         
         '''
-        self.write_string('Genome: {}\tPhenotype: {}\tNumber of non-coding sequences: {}'.format(genome.genome_id,
+        self.write_string('\nGenome: {}\tPhenotype: {}\tNumber of non-coding sequences: {}'.format(genome.genome_id,
                                                                                                      genome.phenotype, len(genome.non_coding_sequences)))
     def get_number_conserved_peptides(self,phenotype):
 
@@ -92,5 +92,5 @@ len(phenotype.genomes),phenotype.output_dir))
         positive = sp[0]
         negative = sp[1]
 
-        self.write_string('Positive score preformance: {} Negative score preformance: {}'.format(positive,negative))
+        self.write_string('\nPositive score preformance: {} Negative score preformance: {}'.format(positive,negative))
 
