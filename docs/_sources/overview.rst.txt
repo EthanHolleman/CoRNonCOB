@@ -30,4 +30,4 @@ For more information on the details of the project, pipeline structure,
 results and citations please visit our application note which can be downloaded
 from the link below.
 
-CoRNonCOB Application Note :download:`pdf <../graphs_and_misc/app_note/App_Note.pdf>`
+CoRNonCOB Application Note :download:`pdf <pdfs/App_Note.pdf>`
