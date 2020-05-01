@@ -1,6 +1,6 @@
 import subprocess
 import os
-
+import Bio
 
 from cornoncob.io_utils import *
 from cornoncob.sequence import NoncodingSeq
@@ -158,7 +158,10 @@ class Genome():
         NoncodingSeq into all six reading frames.
         '''
         for ncs in self.non_coding_seqs:
-            ncs.translation_six_shooter()
+            try:
+                ncs.translation_six_shooter()
+            except Bio.Data.CodonTable.TranslationError as e:
+                continue
 
     def write_peptides_to_fasta_file(self, output_dir=None,
                                      stop_codon_symbol='*', min_len=6):
